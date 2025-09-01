@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
+        rb.freezeRotation = true;
+
         // initialize input
         input = new PlayerInputSystem();
     }
@@ -31,7 +33,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // translate 2D input into XZ movement
-        Vector3 dir = new Vector3(moveInput.x, 0f, moveInput.y);
+        Vector3 dir = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
 
         rb.linearVelocity = new Vector3(
             dir.x * moveSpeed,
