@@ -1,9 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("Health")]
+    [SerializeField] float maxHP = 100f;
+    private float currentHP;
+
+
     [Header("Movement")]
     [SerializeField] float moveSpeed = 7f;
 
@@ -16,6 +22,13 @@ public class PlayerController : MonoBehaviour
     private PlayerInputSystem input;
     private Vector2 moveInput;
     private Camera cam;
+
+
+    private void Start()
+    {
+        currentHP = maxHP;
+
+    }
 
     void Awake()
     {
@@ -36,6 +49,7 @@ public class PlayerController : MonoBehaviour
         moveInput = input.Player.Movement.ReadValue<Vector2>();
 
         Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             Vector3 lookDir = hit.point - transform.position;
@@ -73,5 +87,31 @@ public class PlayerController : MonoBehaviour
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
         bulletRb.linearVelocity = firePoint.forward * bulletSpeed;
         Destroy(bullet, 3f);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHP -= damage;
+        Debug.Log($"{gameObject.name} took {damage} damage. HP left: {currentHP}");
+
+        if (currentHP <= 0f)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log($"{gameObject.name} has died!");
+
+        // Tell gamemanager to respawn after 3 seconds
+        GameManager gm = FindFirstObjectByType<GameManager>();
+
+        if(gm != null)
+        {
+            gm.RespawnPlayer(3f);
+        }
+
+        Destroy(gameObject);
     }
 }

@@ -393,7 +393,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6618658466108237686, guid: d8869b27dc0b5ae479b603f42704f647, type: 3}
       propertyPath: m_Name
-      value: GameManager
+      value: SceneLoader
       objectReference: {fileID: 0}
     - target: {fileID: 8326408817579998665, guid: d8869b27dc0b5ae479b603f42704f647, type: 3}
       propertyPath: m_LocalPosition.x
