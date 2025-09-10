@@ -7,28 +7,31 @@ public class EnemyController : MonoBehaviour
     [SerializeField] public float maxHP = 100f;
     private float currentHP;
 
-
     [Header("Movement")]
+    [SerializeField] private float moveSpeed = 3f;
     private Transform player;
     private NavMeshAgent agent;
-    [SerializeField] private float moveSpeed = 3f;
 
+    [Header("AI Settings")]
+    [SerializeField] private float detectionRange = 8f;
+    [SerializeField] private float attackRange = 12f;
 
-    [Header("Wandering")]
-    [SerializeField] private float wanderRadius = 10f;
-    [SerializeField] private float wanderTimer = 3f;
-    private float wanderCountdown;
-
+    [Header("Wander Points")]
+    public Transform[] wanderPoints;
+    private Transform currentWanderTarget;
+    private float wanderCooldown = 0f;
+    [SerializeField] private float wanderDelay = 3f;
 
     [Header("Attacking")]
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float fireRate = 1f;
-    public float attackRange = 5f;
     public float shootForce = 20f;
-    public System.Action OnDeath;
-    private float fireCooldown =0f;
-  
+    private float fireCooldown = 0f;
+
+    private enum State { Wandering, Chasing, Attacking }
+    private State currentState = State.Wandering;
+
 
 
     private void Start()
@@ -37,8 +40,6 @@ public class EnemyController : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
-        agent.updateRotation = true;
-        wanderCountdown = wanderTimer;
 
         //Find player by tag
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -46,6 +47,8 @@ public class EnemyController : MonoBehaviour
         {
             player = playerObj.transform;
         }
+
+        PickNewWanderPoint();
     }
 
     void Update()
@@ -57,9 +60,8 @@ public class EnemyController : MonoBehaviour
             //Find player by tag
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj != null)
-            {
                 player = playerObj.transform;
-            }
+
         }
 
         if (player != null)
@@ -67,65 +69,94 @@ public class EnemyController : MonoBehaviour
 
             float distance = Vector3.Distance(transform.position, player.position);
 
-            if (distance > attackRange)
+            if (distance <= attackRange && HasLineOfSight())
             {
-                Wander();
+                currentState = State.Attacking;
+            }
+            else if (distance <= detectionRange)
+            {
+                currentState = State.Chasing;
             }
             else
-            {
-                AttackPlayer();
-            }
+                currentState = State.Wandering;
         }
 
-        if(fireCooldown > 0f)
+        switch (currentState)
+        {
+            case State.Wandering: Wander(); break;
+            case State.Chasing: Chase(); break;
+            case State.Attacking: Attack(); break;
+        }
+
+        if (fireCooldown > 0f)
         {
             fireCooldown -= Time.deltaTime;
         }
 
     }
-    
+
     void Wander()
     {
-        wanderCountdown -= Time.deltaTime;
+        wanderCooldown -= Time.deltaTime;
 
-        if(wanderCountdown <= 0f)
+        if (currentWanderTarget == null || agent.remainingDistance <= agent.stoppingDistance + 0.2f)
         {
-            //Pick random point on NavMesh
-            Vector3 randomDir = Random.insideUnitSphere * wanderRadius;
-            randomDir += transform.position;
-
-            if (NavMesh.SamplePosition(randomDir, out NavMeshHit hit, wanderRadius, 1))
+            
+            if (wanderCooldown <= 0f)
             {
-                agent.isStopped = false;
-                agent.SetDestination(hit.position);
+                PickNewWanderPoint();
+                wanderCooldown = wanderDelay;
             }
 
-            wanderCountdown = wanderTimer;
         }
     }
 
-    void AttackPlayer()
+    void PickNewWanderPoint()
+    {
+        if (wanderPoints.Length == 0) return;
+
+        int index = Random.Range(0, wanderPoints.Length);
+        currentWanderTarget = wanderPoints[index];
+        agent.isStopped = false;
+        agent.SetDestination(currentWanderTarget.position);
+    }
+    void Chase()
+    {
+        if (player == null) return;
+        agent.isStopped = false;
+        agent.SetDestination(player.position);
+    }
+
+    void Attack()
     {
         if (player == null) return;
 
+        //Stop to shoot
         agent.isStopped = true;
 
         Vector3 lookDir = (player.position - transform.position);
         lookDir.y = 0f;
-
         if (lookDir.sqrMagnitude > 0.1f)
         {
             transform.rotation = Quaternion.LookRotation(lookDir);
         }
 
-        if (Physics.Raycast(transform.position, lookDir.normalized, out RaycastHit hit, attackRange))
-        {
-            if (hit.collider.CompareTag("Player"))
-            {
-                TryShoot(lookDir.normalized);
-            }
-        }
+        TryShoot(lookDir.normalized);
     }
+
+    bool HasLineOfSight()
+    {
+        if (player == null) return false;
+
+        Vector3 dir = (player.position - transform.position).normalized;
+        if (Physics.Raycast(transform.position, dir, out RaycastHit hit, attackRange))
+        {
+            return hit.collider.CompareTag("Player");
+        }
+        return false;
+    }
+
+   
     void TryShoot(Vector3 direction)
     {
         if(fireCooldown <= 0f)
@@ -161,5 +192,7 @@ public class EnemyController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, transform.forward * attackRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }
