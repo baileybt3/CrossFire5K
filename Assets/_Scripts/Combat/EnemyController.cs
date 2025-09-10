@@ -37,6 +37,16 @@ public class EnemyController : MonoBehaviour
     {
         if (currentHP <= 0) return;
 
+        if (player == null)
+        {
+            //Find player by tag
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                player = playerObj.transform;
+            }
+        }
+
         if (player != null)
         {
 
