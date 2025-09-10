@@ -2,12 +2,20 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    // HP
+    [SerializeField] public float maxHP = 100f;
+    private float currentHP;
+
+    // Movement
+    private Transform player;
     [SerializeField] private float moveSpeed = 3f;
 
-    private Transform player;
+
 
     private void Start()
     {
+        currentHP = maxHP;
+
         //Find player by tag
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
@@ -32,5 +40,24 @@ public class EnemyController : MonoBehaviour
         {
             transform.forward = dir;
         }
+
+    }
+    
+
+    public void TakeDamage(float damage)
+    {
+        currentHP -= damage;
+        Debug.Log($"{gameObject.name} took {damage} damage. HP left: {currentHP}");
+
+        if (currentHP <= 0f)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log($"{gameObject.name} has died!");
+        Destroy(gameObject);
     }
 }
