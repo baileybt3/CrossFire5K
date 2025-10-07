@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // read Move action (from WASD 2D Vector composite)
         moveInput = input.Player.Movement.ReadValue<Vector2>();
 
         Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -69,7 +68,6 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // translate 2D input into XZ movement
         Vector3 dir = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
 
         rb.linearVelocity = new Vector3(
@@ -104,7 +102,6 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log($"{gameObject.name} has died!");
 
-        // Tell gamemanager to respawn after 3 seconds
         GameManager gm = FindFirstObjectByType<GameManager>();
 
         if(gm != null)

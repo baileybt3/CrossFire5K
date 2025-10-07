@@ -10,16 +10,29 @@ public class SceneLoader : MonoBehaviour
 
     private void Start()
     {
-        // When Bootstrap runs, immediately load Main Menu
         if (SceneManager.GetActiveScene().name == "00_Bootstrap")
         {
             SceneManager.LoadScene("01_MainMenu");
         }
     }
 
-    // Public method for UI Buttons
+    public void OpenArmory()
+    {
+        SceneManager.LoadScene("02_Armory");
+    }
+
     public void LoadArena()
     {
-        SceneManager.LoadScene("02_Arena");
+        SceneManager.LoadScene("03_Arena");
+    }
+
+    public void BackButton()
+    {
+        SceneManager.LoadScene("01_MainMenu");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

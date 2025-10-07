@@ -41,7 +41,6 @@ public class EnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
 
-        //Find player by tag
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
@@ -57,7 +56,7 @@ public class EnemyController : MonoBehaviour
 
         if (player == null)
         {
-            //Find player by tag
+         
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj != null)
                 player = playerObj.transform;
@@ -131,7 +130,6 @@ public class EnemyController : MonoBehaviour
     {
         if (player == null) return;
 
-        //Stop to shoot
         agent.isStopped = true;
 
         Vector3 lookDir = (player.position - transform.position);
