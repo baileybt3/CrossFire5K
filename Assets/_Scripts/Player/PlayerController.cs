@@ -8,8 +8,7 @@ public class PlayerController : MonoBehaviour
     [Header("Health")]
     [SerializeField] float maxHP = 100f;
     private float currentHP;
-
-
+    
     [Header("Movement")]
     [SerializeField] float moveSpeed = 7f;
 
@@ -18,15 +17,27 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private float bulletSpeed = 20f;
 
+    [Header("Animation")]
+    private Animator anim;
+    public float maxSpeed = 4f;
+    public bool isDead;
+    Vector3 lastPos;
+
+    [Header("Utils")]
     private Rigidbody rb;
     private PlayerInputSystem input;
     private Vector2 moveInput;
     private Camera cam;
 
+    void OnEnable() => input.Enable();
+    void OnDisable() => input.Disable();
 
     private void Start()
     {
         currentHP = maxHP;
+        if (!anim) anim = GetComponentInChildren<Animator>(true);
+        lastPos = transform.position;
+        isDead = false;
 
     }
 
@@ -37,54 +48,65 @@ public class PlayerController : MonoBehaviour
         rb.freezeRotation = true;
 
         input = new PlayerInputSystem();
+        
         cam = Camera.main;
     }
 
-    void OnEnable() => input.Enable();
-    void OnDisable() => input.Disable();
-
     void Update()
     {
-        moveInput = input.Player.Movement.ReadValue<Vector2>();
+        if(!isDead){
+            moveInput = input.Player.Movement.ReadValue<Vector2>();
 
-        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            Vector3 lookDir = hit.point - transform.position;
-            lookDir.y = 0f;
-
-            if (lookDir.sqrMagnitude > 0.01f)
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                transform.forward = lookDir.normalized;
+                Vector3 lookDir = hit.point - transform.position;
+                lookDir.y = 0f;
+
+                if (lookDir.sqrMagnitude > 0.01f)
+                {
+                    transform.forward = lookDir.normalized;
+                }
+
+                if (input.Player.Combat.WasPressedThisFrame())
+                {
+                    Shoot();
+                }
             }
 
-            if (input.Player.Combat.WasPressedThisFrame())
-            {
-                Shoot();
-            }
+            float mps = (transform.position - lastPos).magnitude / Mathf.Max(Time.deltaTime, 0.0001f);
+            lastPos = transform.position;
+            float speed01 = Mathf.Clamp01(mps / Mathf.Max(maxSpeed, 0.0001f));
+            anim.SetFloat("Speed", speed01);
         }
     }
 
     void FixedUpdate()
     {
-        Vector3 dir = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
+        if (!isDead)
+        {
+            Vector3 dir = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
 
-        rb.linearVelocity = new Vector3(
-            dir.x * moveSpeed,
-            rb.linearVelocity.y,
-            dir.z * moveSpeed
-        );
+            rb.linearVelocity = new Vector3(
+                dir.x * moveSpeed,
+                rb.linearVelocity.y,
+                dir.z * moveSpeed
+            );
+        }
     }
 
     void Shoot()
     {
-        if (bulletPrefab == null || firePoint == null) return;
+        if (!isDead)
+        {
+            if (bulletPrefab == null || firePoint == null) return;
 
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-        bulletRb.linearVelocity = firePoint.forward * bulletSpeed;
-        Destroy(bullet, 3f);
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+            bulletRb.linearVelocity = firePoint.forward * bulletSpeed;
+            Destroy(bullet, 3f);
+        }
     }
 
     public void TakeDamage(float damage)
@@ -94,7 +116,9 @@ public class PlayerController : MonoBehaviour
 
         if (currentHP <= 0f)
         {
-            Die();
+            anim.SetBool("isDead", true);
+            isDead = true;
+            Invoke("Die", 2f);
         }
     }
 

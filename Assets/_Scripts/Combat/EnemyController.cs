@@ -29,10 +29,14 @@ public class EnemyController : MonoBehaviour
     public float shootForce = 20f;
     private float fireCooldown = 0f;
 
+    [Header("Animation")]
+    private Animator anim;
+    public float maxSpeed = 4f;
+    public bool isDead = false;
+    Vector3 lastPos;
+
     private enum State { Wandering, Chasing, Attacking }
     private State currentState = State.Wandering;
-
-
 
     private void Start()
     {
@@ -40,12 +44,16 @@ public class EnemyController : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
+    
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
             player = playerObj.transform;
         }
+
+        if (!anim) anim = GetComponentInChildren<Animator>(true);
+        lastPos = transform.position;
 
         PickNewWanderPoint();
     }
@@ -91,6 +99,11 @@ public class EnemyController : MonoBehaviour
         {
             fireCooldown -= Time.deltaTime;
         }
+
+        float mps = (transform.position - lastPos).magnitude / Mathf.Max(Time.deltaTime, 0.0001f);
+        lastPos = transform.position;
+        float speed01 = Mathf.Clamp01(mps / Mathf.Max(maxSpeed, 0.0001f));
+        anim.SetFloat("Speed", speed01);
 
     }
 
@@ -154,7 +167,6 @@ public class EnemyController : MonoBehaviour
         return false;
     }
 
-   
     void TryShoot(Vector3 direction)
     {
         if(fireCooldown <= 0f)
@@ -176,7 +188,8 @@ public class EnemyController : MonoBehaviour
 
         if (currentHP <= 0f)
         {
-            Die();
+            anim.SetBool("isDead", true);
+            Invoke("Die", 2f);
         }
     }
 

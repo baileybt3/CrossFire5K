@@ -177,6 +177,8 @@ MonoBehaviour:
   firePoint: {fileID: 2485203901326881662}
   fireRate: 1
   shootForce: 20
+  maxSpeed: 4
+  isDead: 0
 --- !u!195 &1070827522466953672
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -258,9 +260,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b4b4ee3932311a4b96f07e05519a735, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7120098711368549791}
-    - targetCorrespondingSourceObject: {fileID: -5151492872390713093, guid: 6b4b4ee3932311a4b96f07e05519a735, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8437828213675836069}
   m_SourcePrefab: {fileID: 100100000, guid: 6b4b4ee3932311a4b96f07e05519a735, type: 3}
 --- !u!4 &158542049336103720 stripped
 Transform:
@@ -294,26 +293,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &4412332313818993720 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -5151492872390713093, guid: 6b4b4ee3932311a4b96f07e05519a735, type: 3}
-  m_PrefabInstance: {fileID: 412633906749732035}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8437828213675836069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4412332313818993720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef51be468afec4a4b96a0c7449037ac2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimationController
-  anim: {fileID: 7120098711368549791}
-  maxSpeed: 4
-  hasGun: 1
 --- !u!1001 &2410907974557000371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -336,7 +315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f2c7e709cd4236d4f9e2924e8457828b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.58
+      value: 0.5799999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f2c7e709cd4236d4f9e2924e8457828b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -344,7 +323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f2c7e709cd4236d4f9e2924e8457828b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.0382
+      value: 1.0382004
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f2c7e709cd4236d4f9e2924e8457828b, type: 3}
       propertyPath: m_LocalRotation.w
