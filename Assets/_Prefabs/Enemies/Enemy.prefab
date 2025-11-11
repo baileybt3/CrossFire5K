@@ -179,6 +179,8 @@ MonoBehaviour:
   shootForce: 20
   maxSpeed: 4
   isDead: 0
+  enemyCollider: {fileID: 1060754964626975132}
+  gun: {fileID: 3293307626366787554}
 --- !u!195 &1070827522466953672
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -365,5 +367,10 @@ PrefabInstance:
 --- !u!4 &2810243397210408280 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f2c7e709cd4236d4f9e2924e8457828b, type: 3}
+  m_PrefabInstance: {fileID: 2410907974557000371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3293307626366787554 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f2c7e709cd4236d4f9e2924e8457828b, type: 3}
   m_PrefabInstance: {fileID: 2410907974557000371}
   m_PrefabAsset: {fileID: 0}

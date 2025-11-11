@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -35,8 +36,22 @@ public class EnemyController : MonoBehaviour
     public bool isDead = false;
     Vector3 lastPos;
 
+    [Header("Collision")]
+    [SerializeField] private CapsuleCollider enemyCollider;
+
+    [Header("Weapon")]
+    [SerializeField] private GameObject gun;
+
     private enum State { Wandering, Chasing, Attacking }
     private State currentState = State.Wandering;
+
+    private void Awake()
+    {
+        if(enemyCollider == null)
+        {
+            enemyCollider = GetComponent<CapsuleCollider>();
+        }
+    }
 
     private void Start()
     {
@@ -188,8 +203,17 @@ public class EnemyController : MonoBehaviour
 
         if (currentHP <= 0f)
         {
-            anim.SetBool("isDead", true);
+            enemyCollider.enabled = false;
+            anim.SetBool("isDead", true);   
+            
+            var rbGun = gun.AddComponent<Rigidbody>();
+            gun.AddComponent<BoxCollider>();
+            rbGun.useGravity = true;
+            rbGun.isKinematic = false;
+
+            isDead = true;
             Invoke("Die", 2f);
+
         }
     }
 

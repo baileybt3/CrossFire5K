@@ -29,18 +29,11 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private Camera cam;
 
+    [Header("Weapon")]
+    [SerializeField]private GameObject gun;
+    
     void OnEnable() => input.Enable();
     void OnDisable() => input.Disable();
-
-    private void Start()
-    {
-        currentHP = maxHP;
-        if (!anim) anim = GetComponentInChildren<Animator>(true);
-        lastPos = transform.position;
-        isDead = false;
-
-    }
-
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -48,8 +41,18 @@ public class PlayerController : MonoBehaviour
         rb.freezeRotation = true;
 
         input = new PlayerInputSystem();
-        
+
         cam = Camera.main;
+
+    }
+
+    private void Start()
+    {
+        currentHP = maxHP;
+        if (!anim) anim = GetComponentInChildren<Animator>(true);
+        lastPos = transform.position;
+        isDead = false;
+        
     }
 
     void Update()
@@ -117,8 +120,15 @@ public class PlayerController : MonoBehaviour
         if (currentHP <= 0f)
         {
             anim.SetBool("isDead", true);
+
+            var rbGun = gun.AddComponent<Rigidbody>();
+            gun.AddComponent<BoxCollider>();
+            rbGun.useGravity = true;
+            rbGun.isKinematic = false;
+
             isDead = true;
             Invoke("Die", 2f);
+
         }
     }
 
