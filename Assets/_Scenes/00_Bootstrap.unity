@@ -391,6 +391,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6399396355879919020, guid: d8869b27dc0b5ae479b603f42704f647, type: 3}
+      propertyPath: arenaSceneNames.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6399396355879919020, guid: d8869b27dc0b5ae479b603f42704f647, type: 3}
+      propertyPath: 'arenaSceneNames.Array.data[0]'
+      value: 04_Arena
+      objectReference: {fileID: 0}
     - target: {fileID: 6618658466108237686, guid: d8869b27dc0b5ae479b603f42704f647, type: 3}
       propertyPath: m_Name
       value: SceneLoader

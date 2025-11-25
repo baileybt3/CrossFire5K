@@ -1,10 +1,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class SceneLoader : MonoBehaviour
+public class SceneLoader : MonoBehaviour    
 {
+    public static SceneLoader Instance { get; private set; }
+
+    public string previousSceneName;
+
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -16,19 +28,37 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
+    private void LoadSceneAndRemember(string sceneName)
+    {
+        previousSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(sceneName);
+    }
+
     public void OpenArmory()
     {
-        SceneManager.LoadScene("02_Armory");
+        LoadSceneAndRemember("02_Armory");
     }
 
-    public void LoadArena()
+    public void LoadMapSelect()
     {
-        SceneManager.LoadScene("03_Arena");
+        LoadSceneAndRemember("03_MapSelect");
     }
 
-    public void BackButton()
+    public void LoadArena(string sceneName)
     {
-        SceneManager.LoadScene("01_MainMenu");
+        LoadSceneAndRemember(sceneName);
+    }
+
+    public void GoBack()
+    {
+        if (!string.IsNullOrEmpty(previousSceneName))
+        {
+            SceneManager.LoadScene(previousSceneName);
+        }
+        else
+        {
+            SceneManager.LoadScene("01_MainMenu");
+        }
     }
 
     public void QuitGame()

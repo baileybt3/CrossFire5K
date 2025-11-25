@@ -15,8 +15,20 @@ EditorBuildSettings:
     path: Assets/_Scenes/02_Armory.unity
     guid: 0ac6f7a567ed27b42b823efe45d622ef
   - enabled: 1
-    path: Assets/_Scenes/03_Arena.unity
-    guid: 6909b5be68e2685438476f955fb5ec51
+    path: Assets/_Scenes/03_MapSelect.unity
+    guid: df093d57dd98ee84484e5eed95b90654
+  - enabled: 1
+    path: Assets/_Scenes/04_Arena_Tutorial.unity
+    guid: d1a1ad5fd0308494e97caae038274c0b
+  - enabled: 1
+    path: Assets/_Scenes/05_Arena_Office.unity
+    guid: d3e6b42d2f036dc47866a0c4ed31b4b9
+  - enabled: 1
+    path: Assets/_Scenes/06_Arena_ParkingGarage.unity
+    guid: a8b377c71f5fcd74a99b1758b2a7aa47
+  - enabled: 1
+    path: Assets/_Scenes/07_Arena_DesertStorm.unity
+    guid: a89b11b7ddf189f4dbb7315fed1e5248
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: da9b943d88d9b69449cc1814fc5d68a3, type: 3}
   m_UseUCBPForAssetBundles: 0
