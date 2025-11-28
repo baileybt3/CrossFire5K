@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapSelectUI
   mapDropdown: {fileID: 3497591112206833580}
+  loadoutDropdown: {fileID: 6156258869924547505}
   arenaSceneNames:
   - 05_Arena_Office
   - 06_Arena_ParkingGarage
@@ -917,6 +918,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35c617ee3597ccb4a9b0bad9efa2eb64, type: 3}
+--- !u!114 &6156258869924547505 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4028395701625828137, guid: 35c617ee3597ccb4a9b0bad9efa2eb64, type: 3}
+  m_PrefabInstance: {fileID: 6156258869924547504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b743370ac3e4ec2a1668f5455a8ef8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_Dropdown
 --- !u!1001 &7075324072956553383
 PrefabInstance:
   m_ObjectHideFlags: 0

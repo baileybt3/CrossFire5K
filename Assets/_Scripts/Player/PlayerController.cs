@@ -30,7 +30,9 @@ public class PlayerController : MonoBehaviour
     private Camera cam;
 
     [Header("Weapon")]
-    [SerializeField]private GameObject gun;
+    [SerializeField] private Transform weaponSpawnPoint;
+    [SerializeField] private GameObject gun;
+    private GameObject currentWeaponInstance;
     
     void OnEnable() => input.Enable();
     void OnDisable() => input.Disable();
@@ -52,6 +54,8 @@ public class PlayerController : MonoBehaviour
         if (!anim) anim = GetComponentInChildren<Animator>(true);
         lastPos = transform.position;
         isDead = false;
+
+        EquipPrimaryFromLoadout();
         
     }
 
@@ -144,5 +148,37 @@ public class PlayerController : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private void EquipPrimaryFromLoadout()
+    {
+        if(weaponSpawnPoint == null)
+        {
+            Debug.LogWarning("WeaponSpawnPoint not assigned on PlayerController.");
+            return;
+        }
+
+        if (ArmoryManager.Instance == null)
+        {
+            Debug.LogWarning("No ArmoryManager found, using default gun.");
+            return;
+        }
+
+        GameObject primaryPrefab = ArmoryManager.Instance.GetActivePrimary();
+        if (primaryPrefab == null)
+        {
+            Debug.LogWarning("Active loadout has no primary weapon set.");
+            return;
+        }
+
+        // Destroy old weapon
+        if(currentWeaponInstance != null)
+        {
+            Destroy(currentWeaponInstance);
+        }
+
+        currentWeaponInstance = Instantiate(primaryPrefab, weaponSpawnPoint.position, weaponSpawnPoint.rotation, weaponSpawnPoint);
+
+        gun = currentWeaponInstance;
     }
 }
