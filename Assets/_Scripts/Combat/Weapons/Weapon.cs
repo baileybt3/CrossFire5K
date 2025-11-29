@@ -13,8 +13,10 @@ public class Weapon : MonoBehaviour
         if (bulletPrefab == null || firePoint == null) return;
 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
         if(bullet.TryGetComponent<Rigidbody>(out var rb))
         {
+            rb.useGravity = false;
             rb.linearVelocity = firePoint.forward * bulletSpeed;
         }
 
