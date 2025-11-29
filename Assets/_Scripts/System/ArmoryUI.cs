@@ -48,6 +48,7 @@ public class ArmoryUI : MonoBehaviour
         ArmoryManager.Instance.SetSecondary(2, secondaryDropdown3.value);
         ArmoryManager.Instance.SetUtility(2, utilityDropdown3.value);
 
+        ArmoryManager.Instance.SaveToPrefs();
         Debug.Log("All loadouts saved.");
     }
 
@@ -71,5 +72,13 @@ public class ArmoryUI : MonoBehaviour
         primaryDropdown3.value = Mathf.Clamp(l2.primaryIndex, 0, primaryDropdown3.options.Count - 1);
         secondaryDropdown3.value = Mathf.Clamp(l2.secondaryIndex, 0, secondaryDropdown3.options.Count - 1);
         utilityDropdown3.value = Mathf.Clamp(l2.utilityIndex, 0, utilityDropdown3.options.Count - 1);
+    }
+
+    private void OnDisable()
+    {
+        if(ArmoryManager.Instance != null)
+        {
+            SaveAllLoadouts();
+        }
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -11,11 +12,6 @@ public class PlayerController : MonoBehaviour
     
     [Header("Movement")]
     [SerializeField] float moveSpeed = 7f;
-
-    [Header("Shooting")]
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform firePoint;
-    [SerializeField] private float bulletSpeed = 20f;
 
     [Header("Animation")]
     private Animator anim;
@@ -33,7 +29,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform weaponSpawnPoint;
     [SerializeField] private GameObject gun;
     private GameObject currentWeaponInstance;
-    
+    private Weapon currentWeapon;
+
+    private PauseMenuUI pauseMenu;
+
     void OnEnable() => input.Enable();
     void OnDisable() => input.Disable();
     void Awake()
@@ -61,6 +60,20 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (input.Player.System.WasPressedThisFrame())
+        {
+            if (pauseMenu != null)
+            {
+                pauseMenu.TogglePause();
+            }
+        }
+
+        if (pauseMenu != null && pauseMenu.IsPaused)
+        {
+            anim.SetFloat("Speed", 0f);
+            return;
+        }
+        
         if(!isDead){
             moveInput = input.Player.Movement.ReadValue<Vector2>();
 
@@ -103,16 +116,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Initialize(PauseMenuUI pauseMenuUI)
+    {
+        pauseMenu = pauseMenuUI;
+    }
+
     void Shoot()
     {
-        if (!isDead)
+        if (input.Player.Combat.WasPressedThisFrame())
         {
-            if (bulletPrefab == null || firePoint == null) return;
-
-            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-            bulletRb.linearVelocity = firePoint.forward * bulletSpeed;
-            Destroy(bullet, 3f);
+            if(!isDead && currentWeapon != null)
+            {
+                currentWeapon.Fire();
+            }
         }
     }
 
@@ -180,5 +196,11 @@ public class PlayerController : MonoBehaviour
         currentWeaponInstance = Instantiate(primaryPrefab, weaponSpawnPoint.position, weaponSpawnPoint.rotation, weaponSpawnPoint);
 
         gun = currentWeaponInstance;
+        currentWeapon = currentWeaponInstance.GetComponentInChildren<Weapon>();
+
+        if(currentWeapon == null)
+        {
+            Debug.LogWarning("Equipped weapon has no weapon component!");
+        }
     }
 }

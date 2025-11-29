@@ -41,6 +41,8 @@ public class ArmoryManager : MonoBehaviour
                 loadouts[i] = new Loadout();
             }
         }
+
+        LoadFromPrefs();
     }
 
     // Set weapons
@@ -87,5 +89,32 @@ public class ArmoryManager : MonoBehaviour
 
         if (l.utilityIndex < 0 || l.utilityIndex >= utilities.Length) return null;
         return utilities[l.utilityIndex];
+    }
+
+    public void SaveToPrefs()
+    {
+        for (int i = 0; i < loadouts.Length; i++)
+        {
+            PlayerPrefs.SetInt($"Loadout{i}_Primary", loadouts[i].primaryIndex);
+            PlayerPrefs.SetInt($"Loadout{i}_Secondary", loadouts[i].secondaryIndex);
+            PlayerPrefs.SetInt($"Loadout{i}_Utility", loadouts[i].utilityIndex);
+        }
+        PlayerPrefs.SetInt("ActiveLoadoutIndex", ActiveLoadoutIndex);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadFromPrefs()
+    {
+        for (int i = 0; i < loadouts.Length; i++)
+        {
+            if (loadouts[i] == null) loadouts[i] = new Loadout();
+
+            loadouts[i].primaryIndex = PlayerPrefs.GetInt($"Loadout{i}_Primary", loadouts[i].primaryIndex);
+            loadouts[i].secondaryIndex = PlayerPrefs.GetInt($"Loadout{i}_Secondary", loadouts[i].secondaryIndex);
+            loadouts[i].utilityIndex = PlayerPrefs.GetInt($"Loadout{i}_Utility", loadouts[i].utilityIndex);
+        }
+
+        int savedActive = PlayerPrefs.GetInt("ActiveLoadoutIndex", ActiveLoadoutIndex);
+        SetActiveLoadout(savedActive);
     }
 }

@@ -23,6 +23,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "System",
+                    "type": "Button",
+                    "id": "78e3db9e-09fa-441e-a7f1-06145a65e0b5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -89,6 +98,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Combat",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7c66b64b-224b-46c9-8180-b6e2205e17f5",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "System",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "afe5f270-2727-4e1c-984e-cdad5c969c98",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "System",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

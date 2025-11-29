@@ -28,6 +28,7 @@ public class MapSelectUI : MonoBehaviour
         // Loadout option
         if (ArmoryManager.Instance != null)
         {
+            int loadoutIndex = Mathf.Clamp(loadoutDropdown.value, 0, ArmoryManager.Instance.loadouts.Length - 1);
             ArmoryManager.Instance.SetActiveLoadout(loadoutDropdown.value);
         }
         else

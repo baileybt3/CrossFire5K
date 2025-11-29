@@ -3,7 +3,8 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject playerPrefab;
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private PauseMenuUI pauseMenuUI;
     public Transform respawnPoint;
 
     private GameObject currentPlayer;
@@ -17,8 +18,23 @@ public class GameManager : MonoBehaviour
     {
         if(playerPrefab != null && respawnPoint != null)
         {
+            // Destroy old player after death
+            if (currentPlayer != null)
+            {
+                Destroy(currentPlayer);
+            }
+            
             GameObject player = Instantiate(playerPrefab, respawnPoint.position, respawnPoint.rotation);
+            currentPlayer = player;
 
+            // Inject PauseMenu into PlayerController
+            PlayerController controller = player.GetComponent<PlayerController>();
+            if(controller != null && pauseMenuUI != null)
+            {
+                controller.Initialize(pauseMenuUI);
+            }
+
+            // Hook up camera
             CameraFollow camFollow = FindAnyObjectByType<CameraFollow>();
             if(camFollow != null)
             {

@@ -286,12 +286,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArmoryManager
   primaries:
-  - {fileID: 919132149155446097, guid: ba12fdf1a5d16464c843ff62fd960bc5, type: 3}
-  - {fileID: 919132149155446097, guid: 79426b424c266dd418994db9ce8f7032, type: 3}
+  - {fileID: 7485399860461132827, guid: 0aee759ee332ae547a1e1c3e7a2e09a4, type: 3}
+  - {fileID: 4444470332792128655, guid: e70e8d431146a924bbda8f63eb2ec55a, type: 3}
   secondaries:
-  - {fileID: 919132149155446097, guid: f2c7e709cd4236d4f9e2924e8457828b, type: 3}
+  - {fileID: 4488337439213621009, guid: 3a2d135b4da18284dafa2a7258788766, type: 3}
   utilities:
-  - {fileID: -927199367670048503, guid: 3e446f987c16c1c49b26399de3f8ba0c, type: 3}
+  - {fileID: 4497332039959230619, guid: 9df536ad4b8a1c442b2da2e86a76707f, type: 3}
   loadouts:
   - primaryIndex: 0
     secondaryIndex: 0

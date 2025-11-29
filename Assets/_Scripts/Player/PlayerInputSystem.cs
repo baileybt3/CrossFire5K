@@ -109,6 +109,15 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""System"",
+                    ""type"": ""Button"",
+                    ""id"": ""78e3db9e-09fa-441e-a7f1-06145a65e0b5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -177,6 +186,28 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Combat"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c66b64b-224b-46c9-8180-b6e2205e17f5"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""System"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""afe5f270-2727-4e1c-984e-cdad5c969c98"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""System"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -187,6 +218,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Combat = m_Player.FindAction("Combat", throwIfNotFound: true);
+        m_Player_System = m_Player.FindAction("System", throwIfNotFound: true);
     }
 
     ~@PlayerInputSystem()
@@ -269,6 +301,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Combat;
+    private readonly InputAction m_Player_System;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -288,6 +321,10 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Combat".
         /// </summary>
         public InputAction @Combat => m_Wrapper.m_Player_Combat;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/System".
+        /// </summary>
+        public InputAction @System => m_Wrapper.m_Player_System;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -320,6 +357,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Combat.started += instance.OnCombat;
             @Combat.performed += instance.OnCombat;
             @Combat.canceled += instance.OnCombat;
+            @System.started += instance.OnSystem;
+            @System.performed += instance.OnSystem;
+            @System.canceled += instance.OnSystem;
         }
 
         /// <summary>
@@ -337,6 +377,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Combat.started -= instance.OnCombat;
             @Combat.performed -= instance.OnCombat;
             @Combat.canceled -= instance.OnCombat;
+            @System.started -= instance.OnSystem;
+            @System.performed -= instance.OnSystem;
+            @System.canceled -= instance.OnSystem;
         }
 
         /// <summary>
@@ -391,5 +434,12 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCombat(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "System" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSystem(InputAction.CallbackContext context);
     }
 }
