@@ -154,6 +154,11 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnPlayerDeath();
+        }
+
         Debug.Log($"{gameObject.name} has died!");
 
         GameManager gm = FindFirstObjectByType<GameManager>();
