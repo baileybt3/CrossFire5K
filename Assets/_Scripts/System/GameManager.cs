@@ -18,13 +18,16 @@ public class GameManager : MonoBehaviour
 
     [Header("Tickets")]
     [SerializeField] private int startingEnemyTickets = 15;
-    [SerializeField] private int startingFriendlyTickets = 15;
+    [SerializeField] private int startingPlayerTickets = 15;
     private int currentPlayerTickets;
     private int currentEnemyTickets;
 
     // Read-only hud properties
     public int PlayerTickets => currentPlayerTickets;
     public int EnemyTickets => currentEnemyTickets;
+
+    public int StartingPlayerTickets => startingPlayerTickets;
+    public int StartingEnemyTickets => startingEnemyTickets;
 
     //Event HUD / UI
     public event Action<int, int> OnTicketsChanged;
@@ -52,7 +55,7 @@ public class GameManager : MonoBehaviour
     {
         CurrentMatchState = MatchState.Playing;
 
-        currentPlayerTickets = startingFriendlyTickets;
+        currentPlayerTickets = startingPlayerTickets;
         currentEnemyTickets = startingEnemyTickets;
         RaiseTicketsChanged();
 
