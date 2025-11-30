@@ -161,13 +161,6 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log($"{gameObject.name} has died!");
 
-        GameManager gm = FindFirstObjectByType<GameManager>();
-
-        if(gm != null)
-        {
-            gm.RespawnPlayer(3f);
-        }
-
         Destroy(gameObject);
     }
 
