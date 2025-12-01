@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [Header("Health")]
     [SerializeField] float maxHP = 100f;
     private float currentHP;
+    public float MaxHP => maxHP;
+    public float CurrentHP => currentHP;
     
     [Header("Movement")]
     [SerializeField] float moveSpeed = 7f;
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject gun;
     private GameObject currentWeaponInstance;
     private Weapon currentWeapon;
+    public Weapon CurrentWeapon => currentWeapon;
 
     private PauseMenuUI pauseMenu;
 
@@ -92,6 +95,14 @@ public class PlayerController : MonoBehaviour
                 if (input.Player.Combat.WasPressedThisFrame())
                 {
                     Shoot();
+                }
+            }
+
+            if (input.Player.Reload.WasPressedThisFrame())
+            {
+                if (currentWeapon != null)
+                {
+                    currentWeapon.Reload();
                 }
             }
 
