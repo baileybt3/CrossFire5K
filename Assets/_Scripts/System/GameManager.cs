@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
 
     public void StartMatch()
     {
+        Time.timeScale = 1f;
+
         CurrentMatchState = MatchState.Playing;
 
         currentPlayerTickets = startingPlayerTickets;
@@ -102,6 +104,8 @@ public class GameManager : MonoBehaviour
         }
 
         CurrentMatchState = MatchState.GameOver;
+
+        Time.timeScale = 0f;
 
         OnMatchEnded?.Invoke(playerWon);
     }
