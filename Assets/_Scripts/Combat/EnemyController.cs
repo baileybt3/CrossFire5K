@@ -224,6 +224,11 @@ public class EnemyController : MonoBehaviour
             GameManager.Instance.OnEnemyDeath();
         }
 
+        if(WaveManager.Instance != null)
+        {
+            WaveManager.Instance.OnEnemyDied();
+        }
+
         Debug.Log($"{gameObject.name} has died!");
         Destroy(gameObject);
     }

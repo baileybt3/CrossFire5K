@@ -1,32 +1,29 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-    public float spawnInterval = 3f;
-    private float timer;
-    public int maxEnemies = 5;
-   
-    
-    void Start()
+
+    [Header("Enemy")]
+    [SerializeField] private GameObject enemyPrefab;
+
+    public GameObject SpawnEnemy()
     {
-        timer = spawnInterval;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        timer -= Time.deltaTime;
-
-        int currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-
-        if (timer <= 0 && currentEnemies < maxEnemies)
+        if (enemyPrefab == null)
         {
-            Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-            timer = spawnInterval;
+            Debug.LogWarning($"EnemySpawner on {name} has no enemyPrefab assigned.", this);
+            return null;
         }
+    
+
+        GameObject enemy = Instantiate(enemyPrefab, transform.position, transform.rotation);
+        return enemy;
     }
 
-    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 0.25f);
+    }
+
+
 }
