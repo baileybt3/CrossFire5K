@@ -71,8 +71,23 @@ public class PlayerHealth : MonoBehaviour
 
         if (reloadPromptText != null)
         {
-            bool shouldShow = currentAmmo <= 0 && reserveAmmo > 0;
-            reloadPromptText.gameObject.SetActive(shouldShow);
+            if(currentAmmo <= 0)
+            {
+                if(reserveAmmo > 0)
+                {
+                    reloadPromptText.text = "Press R to Reload";
+                    reloadPromptText.gameObject.SetActive(true);
+                }
+                else
+                {
+                    reloadPromptText.text = "Out of Ammo";
+                    reloadPromptText.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                reloadPromptText.gameObject.SetActive(false);
+            }
         }
     }
     
