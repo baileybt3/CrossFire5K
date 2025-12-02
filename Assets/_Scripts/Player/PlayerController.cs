@@ -29,10 +29,25 @@ public class PlayerController : MonoBehaviour
 
     [Header("Weapon")]
     [SerializeField] private Transform weaponSpawnPoint;
+    [SerializeField] private Transform primaryHolsterPoint;
+    [SerializeField] private Transform secondaryHolsterPoint;
+    [SerializeField] private Transform utilityHolsterPoint;
+
     [SerializeField] private GameObject gun;
+
+    private GameObject primaryInstance;
+    private GameObject secondaryInstance;
+    private GameObject utilityInstance;
+
+    private Weapon primaryWeapon;
+    private Weapon secondaryWeapon;
+    private Weapon utilityWeapon;
+
     private GameObject currentWeaponInstance;
     private Weapon currentWeapon;
     public Weapon CurrentWeapon => currentWeapon;
+    private enum WeaponSlot { None, Primary, Secondary, Utility }
+    private WeaponSlot currentSlot = WeaponSlot.None;
 
     private PauseMenuUI pauseMenu;
 
@@ -104,6 +119,21 @@ public class PlayerController : MonoBehaviour
                 {
                     currentWeapon.Reload();
                 }
+            }
+
+            if (input.Player.PrimaryWeapon.WasPressedThisFrame())
+            {
+                EquipWeaponSlot(WeaponSlot.Primary);
+            }
+
+            if (input.Player.SecondaryWeapon.WasPressedThisFrame())
+            {
+                EquipWeaponSlot(WeaponSlot.Secondary);
+            }
+
+            if (input.Player.UtilityWeapon.WasPressedThisFrame())
+            {
+                EquipWeaponSlot(WeaponSlot.Utility);
             }
 
             float mps = (transform.position - lastPos).magnitude / Mathf.Max(Time.deltaTime, 0.0001f);
@@ -189,27 +219,149 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        // Clean old instances for respawn
+        if (primaryInstance != null) Destroy(primaryInstance);
+        if (secondaryInstance != null) Destroy(secondaryInstance);
+        if (utilityInstance != null) Destroy(utilityInstance);
+
+        // Get current loadout prefabs
         GameObject primaryPrefab = ArmoryManager.Instance.GetActivePrimary();
+        GameObject secondaryPrefab = ArmoryManager.Instance.GetActiveSecondary();
+        GameObject utilityPrefab = ArmoryManager.Instance.GetActiveUtility();
+
+        // Spawn prefabs at holster points
+        if (primaryPrefab != null && primaryHolsterPoint != null)
+        {
+            primaryInstance = Instantiate(
+                    primaryPrefab,
+                    primaryHolsterPoint.position,
+                    primaryHolsterPoint.rotation,
+                    primaryHolsterPoint
+            );
+            primaryWeapon = primaryInstance.GetComponentInChildren<Weapon>();
+        }
+
+        if (secondaryPrefab != null && secondaryHolsterPoint != null)
+        {
+            secondaryInstance = Instantiate(
+                    secondaryPrefab,
+                    secondaryHolsterPoint.position,
+                    secondaryHolsterPoint.rotation,
+                    secondaryHolsterPoint
+            );
+            secondaryWeapon = secondaryInstance.GetComponentInChildren<Weapon>();
+        }
+
+        if (utilityPrefab != null && utilityHolsterPoint != null)
+        {
+            utilityInstance = Instantiate(
+                    utilityPrefab,
+                    utilityHolsterPoint.position,
+                    utilityHolsterPoint.rotation,
+                    utilityHolsterPoint
+            );
+            utilityWeapon = utilityInstance.GetComponentInChildren<Weapon>();
+        }
+
         if (primaryPrefab == null)
         {
             Debug.LogWarning("Active loadout has no primary weapon set.");
             return;
         }
 
-        // Destroy old weapon
-        if(currentWeaponInstance != null)
+        if(primaryWeapon != null)
         {
-            Destroy(currentWeaponInstance);
+            EquipWeaponSlot(WeaponSlot.Primary);
         }
-
-        currentWeaponInstance = Instantiate(primaryPrefab, weaponSpawnPoint.position, weaponSpawnPoint.rotation, weaponSpawnPoint);
-
-        gun = currentWeaponInstance;
-        currentWeapon = currentWeaponInstance.GetComponentInChildren<Weapon>();
-
-        if(currentWeapon == null)
+        else if (secondaryWeapon != null)
         {
-            Debug.LogWarning("Equipped weapon has no weapon component!");
+            EquipWeaponSlot(WeaponSlot.Secondary);
+        }
+        else if (utilityWeapon != null)
+        {
+            EquipWeaponSlot(WeaponSlot.Utility);
+        }
+        else
+        {
+            Debug.LogWarning("No weapons found in active loadout.");
         }
     }
+
+    private void EquipWeaponSlot(WeaponSlot slot)
+    {
+        currentSlot = slot;
+
+        // Put everything back on holsters first
+        if (primaryInstance != null && primaryHolsterPoint != null)
+        {
+            primaryInstance.transform.SetParent(primaryHolsterPoint);
+            primaryInstance.transform.localPosition = Vector3.zero;
+            primaryInstance.transform.localRotation = Quaternion.identity;
+        }
+
+        if (secondaryInstance != null && secondaryHolsterPoint != null)
+        {
+            secondaryInstance.transform.SetParent(secondaryHolsterPoint);
+            secondaryInstance.transform.localPosition = Vector3.zero;
+            secondaryInstance.transform.localRotation = Quaternion.identity;
+        }
+
+        if (utilityInstance != null && utilityHolsterPoint != null)
+        {
+            utilityInstance.transform.SetParent(utilityHolsterPoint);
+            utilityInstance.transform.localPosition = Vector3.zero;
+            utilityInstance.transform.localRotation = Quaternion.identity;
+        }
+
+        currentWeaponInstance = null;
+        currentWeapon = null;
+
+        // Move chosen one to hands
+        switch (slot)
+        {
+            case WeaponSlot.Primary:
+                if (primaryInstance != null)
+                {
+                    primaryInstance.transform.SetParent(weaponSpawnPoint);
+                    primaryInstance.transform.localPosition = Vector3.zero;
+                    primaryInstance.transform.localRotation = Quaternion.identity;
+                    currentWeaponInstance = primaryInstance;
+                    currentWeapon = primaryWeapon;
+                }
+                break;
+
+            case WeaponSlot.Secondary:
+                if (secondaryInstance != null)
+                {
+                    secondaryInstance.transform.SetParent(weaponSpawnPoint);
+                    secondaryInstance.transform.localPosition = Vector3.zero;
+                    secondaryInstance.transform.localRotation = Quaternion.identity;
+                    currentWeaponInstance = secondaryInstance;
+                    currentWeapon = secondaryWeapon;
+                }
+                break;
+
+            case WeaponSlot.Utility:
+                if (utilityInstance != null)
+                {
+                    utilityInstance.transform.SetParent(weaponSpawnPoint);
+                    utilityInstance.transform.localPosition = Vector3.zero;
+                    utilityInstance.transform.localRotation = Quaternion.identity;
+                    currentWeaponInstance = utilityInstance;
+                    currentWeapon = utilityWeapon;
+                }
+                break;
+        }
+
+        // Keep gun reference in sync for death ragdoll logic
+        gun = currentWeaponInstance;
+
+        // Refresh ammo HUD for the newly equipped weapon
+        if (currentWeapon != null && PlayerHealth.Instance != null)
+        {
+            PlayerHealth.Instance.UpdateAmmo(currentWeapon.CurrentAmmo, currentWeapon.ReserveAmmo);
+        }
+    }
+
 }
+

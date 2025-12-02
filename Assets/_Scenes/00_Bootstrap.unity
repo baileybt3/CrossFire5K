@@ -291,7 +291,7 @@ MonoBehaviour:
   secondaries:
   - {fileID: 4488337439213621009, guid: 3a2d135b4da18284dafa2a7258788766, type: 3}
   utilities:
-  - {fileID: 4497332039959230619, guid: 9df536ad4b8a1c442b2da2e86a76707f, type: 3}
+  - {fileID: 1464094271655144587, guid: 9df536ad4b8a1c442b2da2e86a76707f, type: 3}
   loadouts:
   - primaryIndex: 0
     secondaryIndex: 0

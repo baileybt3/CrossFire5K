@@ -127,6 +127,33 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PrimaryWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""2227ef11-0776-4280-a209-f4ce203f3cfc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SecondaryWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""b2b67940-233d-4bbc-b795-0942845ba60e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UtilityWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""b3487896-915a-4a3f-b624-6826fabc0c36"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -239,6 +266,50 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6e4c1658-3fba-4ec2-b8d8-c8863e455f0a"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrimaryWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""61d4ef0c-4566-43b3-bd3c-fc8399367187"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondaryWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""89998c24-b03a-4245-ac40-265c7571ce64"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondaryWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2157966-7bc7-4bfa-bf1e-85d2ae1e0956"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UtilityWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -251,6 +322,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Player_Combat = m_Player.FindAction("Combat", throwIfNotFound: true);
         m_Player_System = m_Player.FindAction("System", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
+        m_Player_PrimaryWeapon = m_Player.FindAction("PrimaryWeapon", throwIfNotFound: true);
+        m_Player_SecondaryWeapon = m_Player.FindAction("SecondaryWeapon", throwIfNotFound: true);
+        m_Player_UtilityWeapon = m_Player.FindAction("UtilityWeapon", throwIfNotFound: true);
     }
 
     ~@PlayerInputSystem()
@@ -335,6 +409,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Combat;
     private readonly InputAction m_Player_System;
     private readonly InputAction m_Player_Reload;
+    private readonly InputAction m_Player_PrimaryWeapon;
+    private readonly InputAction m_Player_SecondaryWeapon;
+    private readonly InputAction m_Player_UtilityWeapon;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -362,6 +439,18 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Reload".
         /// </summary>
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/PrimaryWeapon".
+        /// </summary>
+        public InputAction @PrimaryWeapon => m_Wrapper.m_Player_PrimaryWeapon;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SecondaryWeapon".
+        /// </summary>
+        public InputAction @SecondaryWeapon => m_Wrapper.m_Player_SecondaryWeapon;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/UtilityWeapon".
+        /// </summary>
+        public InputAction @UtilityWeapon => m_Wrapper.m_Player_UtilityWeapon;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -400,6 +489,15 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @PrimaryWeapon.started += instance.OnPrimaryWeapon;
+            @PrimaryWeapon.performed += instance.OnPrimaryWeapon;
+            @PrimaryWeapon.canceled += instance.OnPrimaryWeapon;
+            @SecondaryWeapon.started += instance.OnSecondaryWeapon;
+            @SecondaryWeapon.performed += instance.OnSecondaryWeapon;
+            @SecondaryWeapon.canceled += instance.OnSecondaryWeapon;
+            @UtilityWeapon.started += instance.OnUtilityWeapon;
+            @UtilityWeapon.performed += instance.OnUtilityWeapon;
+            @UtilityWeapon.canceled += instance.OnUtilityWeapon;
         }
 
         /// <summary>
@@ -423,6 +521,15 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @PrimaryWeapon.started -= instance.OnPrimaryWeapon;
+            @PrimaryWeapon.performed -= instance.OnPrimaryWeapon;
+            @PrimaryWeapon.canceled -= instance.OnPrimaryWeapon;
+            @SecondaryWeapon.started -= instance.OnSecondaryWeapon;
+            @SecondaryWeapon.performed -= instance.OnSecondaryWeapon;
+            @SecondaryWeapon.canceled -= instance.OnSecondaryWeapon;
+            @UtilityWeapon.started -= instance.OnUtilityWeapon;
+            @UtilityWeapon.performed -= instance.OnUtilityWeapon;
+            @UtilityWeapon.canceled -= instance.OnUtilityWeapon;
         }
 
         /// <summary>
@@ -491,5 +598,26 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnReload(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "PrimaryWeapon" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPrimaryWeapon(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SecondaryWeapon" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSecondaryWeapon(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "UtilityWeapon" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnUtilityWeapon(InputAction.CallbackContext context);
     }
 }
