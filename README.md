@@ -13,6 +13,6 @@ The players’ primary controls include using WASD movement for smooth responsiv
 
 * Platform: PC (Windows)  
 
-* Engine: Unity (C#) |  Tools: Blender (art)  |  GitHub (version control)  |  FL Studio (sound fx)  
+* Engine: Unity (C#) |  Tools: Blender (art/models)  |  GitHub (version control)  |  FL Studio (sound fx)  
 
 
