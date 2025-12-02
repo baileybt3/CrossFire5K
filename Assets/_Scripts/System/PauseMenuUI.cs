@@ -77,4 +77,15 @@ public class PauseMenuUI : MonoBehaviour
     {
         Debug.Log("Settings menu in development");
     }
+
+    private void OnDestroy()
+    {
+       if(Time.timeScale == 0f)
+        {
+            Time.timeScale = 1f;
+        }
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
 }

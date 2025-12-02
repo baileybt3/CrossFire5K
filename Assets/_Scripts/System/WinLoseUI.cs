@@ -79,4 +79,12 @@ public class WinLoseUI : MonoBehaviour
 
         SceneManager.LoadScene("01_MainMenu");
     }
+
+    private void OnDestroy()
+    {
+        if(Time.timeScale == 0f)
+        {
+            Time.timeScale = 1f;
+        }
+    }
 }
