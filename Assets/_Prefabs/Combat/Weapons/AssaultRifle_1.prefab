@@ -125,8 +125,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   bulletPrefab: {fileID: 1065904945727095327, guid: 05221df7621e3ce4d8374ffcb840fe45, type: 3}
   firePoint: {fileID: 1427001738351449119}
-  bulletSpeed: 20
+  bulletSpeed: 35
   bulletLifetime: 3
+  damage: 20
+  fireMode: 1
+  fireRate: 10
+  magazineSize: 30
+  startingReserveAmmo: 90
+  audioSource: {fileID: 0}
+  fireSound: {fileID: 0}
+  reloadSound: {fileID: 0}
+  emptyMagazineSound: {fileID: 0}
+  fireCooldown: 0
 --- !u!4 &7830259120996026017 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ba12fdf1a5d16464c843ff62fd960bc5, type: 3}

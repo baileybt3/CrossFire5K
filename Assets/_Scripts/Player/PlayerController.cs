@@ -93,8 +93,10 @@ public class PlayerController : MonoBehaviour
         }
         
         if(!isDead){
+            // Movement input
             moveInput = input.Player.Movement.ReadValue<Vector2>();
 
+            // Aim towards mouse position
             Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             if (Physics.Raycast(ray, out RaycastHit hit))
@@ -106,13 +108,17 @@ public class PlayerController : MonoBehaviour
                 {
                     transform.forward = lookDir.normalized;
                 }
-
-                if (input.Player.Combat.WasPressedThisFrame())
-                {
-                    Shoot();
-                }
             }
 
+            // Fire input
+            if(currentWeapon != null)
+            {
+                bool fireHeld = input.Player.Combat.IsPressed();
+                bool firePressed = input.Player.Combat.WasPressedThisFrame();
+                currentWeapon.HandleFireInput(fireHeld, firePressed, Time.deltaTime);
+            }
+
+            // Reload input
             if (input.Player.Reload.WasPressedThisFrame())
             {
                 if (currentWeapon != null)
@@ -121,6 +127,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
+            // Weapon swap input
             if (input.Player.PrimaryWeapon.WasPressedThisFrame())
             {
                 EquipWeaponSlot(WeaponSlot.Primary);
@@ -160,17 +167,6 @@ public class PlayerController : MonoBehaviour
     public void Initialize(PauseMenuUI pauseMenuUI)
     {
         pauseMenu = pauseMenuUI;
-    }
-
-    void Shoot()
-    {
-        if (input.Player.Combat.WasPressedThisFrame())
-        {
-            if(!isDead && currentWeapon != null)
-            {
-                currentWeapon.Fire();
-            }
-        }
     }
 
     public void TakeDamage(float damage)
