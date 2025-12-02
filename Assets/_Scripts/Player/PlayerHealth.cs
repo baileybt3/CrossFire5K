@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Image healthFillImage;
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI ammoText;
+    [SerializeField] private TextMeshProUGUI reloadPromptText;
 
     public static PlayerHealth Instance { get; private set; }
 
@@ -19,6 +20,11 @@ public class PlayerHealth : MonoBehaviour
         {
             Destroy(gameObject);
             return;
+        }
+
+        if (reloadPromptText != null)
+        {
+            reloadPromptText.gameObject.SetActive(false);
         }
 
         Instance = this;
@@ -55,13 +61,19 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void UpdateAmmo(int currentInMag, int reserve)
+    public void UpdateAmmo(int currentAmmo, int reserveAmmo)
     {
 
         if (ammoText != null)
         {
-            ammoText.text = $"{currentInMag} / {reserve}";
+            ammoText.text = $"{currentAmmo} / {reserveAmmo}";
         }  
+
+        if (reloadPromptText != null)
+        {
+            bool shouldShow = currentAmmo <= 0 && reserveAmmo > 0;
+            reloadPromptText.gameObject.SetActive(shouldShow);
+        }
     }
     
 }
