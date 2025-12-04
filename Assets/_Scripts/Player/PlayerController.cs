@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] float maxHP = 100f;
-    private float currentHP;
+    public float currentHP;
     public float MaxHP => maxHP;
     public float CurrentHP => currentHP;
     
@@ -189,6 +189,12 @@ public class PlayerController : MonoBehaviour
             Invoke("Die", 2f);
 
         }
+    }
+
+    public void AddHealth(float amount)
+    {
+        currentHP = Mathf.Clamp(currentHP + amount, 0f, maxHP);
+        Debug.Log($"{gameObject.name} healed {amount}. HP is now: {currentHP}");
     }
 
     private void Die()

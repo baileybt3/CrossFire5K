@@ -90,5 +90,19 @@ public class PlayerHealth : MonoBehaviour
             }
         }
     }
+
+    public void AddHealth(float amount)
+    {
+        if(player == null)
+        {
+            player = FindAnyObjectByType<PlayerController>();
+        }
+
+        if (player == null) return;
+
+        player.AddHealth(amount);
+
+        UpdateHealthUI();
+    }
     
 }

@@ -140,4 +140,12 @@ public class Weapon : MonoBehaviour
             PlayerHealth.Instance.UpdateAmmo(CurrentAmmo, ReserveAmmo);
         }
     }
+
+    public void AddReserveAmmo(int amount)
+    {
+        if (amount <= 0) return;
+
+        ReserveAmmo += amount;
+        UpdateHUDAmmo();
+    }
 }

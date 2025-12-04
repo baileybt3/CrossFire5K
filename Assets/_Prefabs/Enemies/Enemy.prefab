@@ -181,6 +181,10 @@ MonoBehaviour:
   isDead: 0
   enemyCollider: {fileID: 1060754964626975132}
   gun: {fileID: 3293307626366787554}
+  dropChance: 0.4
+  pickupPrefabs:
+  - {fileID: 2932356365240894736, guid: 75edcd1fbe61ee54685b5da75554b13d, type: 3}
+  - {fileID: 2582541898823728464, guid: a1cbc5aa01fce514b868a85a2e88b9b9, type: 3}
 --- !u!195 &1070827522466953672
 NavMeshAgent:
   m_ObjectHideFlags: 0

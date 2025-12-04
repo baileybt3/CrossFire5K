@@ -42,6 +42,10 @@ public class EnemyController : MonoBehaviour
     [Header("Weapon")]
     [SerializeField] private GameObject gun;
 
+    [Header("Player Pickup")]
+    [SerializeField, Range(0f, 1f)] private float dropChance = 0.4f;
+    [SerializeField] private GameObject[] pickupPrefabs;
+
     private enum State { Wandering, Chasing, Attacking }
     private State currentState = State.Wandering;
 
@@ -229,8 +233,21 @@ public class EnemyController : MonoBehaviour
             WaveManager.Instance.OnEnemyDied();
         }
 
+        TryDropPickup();
         Debug.Log($"{gameObject.name} has died!");
         Destroy(gameObject);
+    }
+
+    private void TryDropPickup()
+    {
+        if (pickupPrefabs == null || pickupPrefabs.Length == 0) return;
+
+        if (Random.value <= dropChance)
+        {
+            GameObject prefab = pickupPrefabs[Random.Range(0, pickupPrefabs.Length)];
+            Vector3 spawnPos = transform.position + Vector3.up * 0.5f;
+            Instantiate(prefab, spawnPos, Quaternion.identity);
+        }
     }
 
     void OnDrawGizmosSelected()
