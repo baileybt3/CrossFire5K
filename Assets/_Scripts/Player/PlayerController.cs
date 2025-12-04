@@ -184,6 +184,8 @@ public class PlayerController : MonoBehaviour
             rbGun.isKinematic = false;
 
             isDead = true;
+            Destroy(secondaryInstance);
+            Destroy(utilityInstance);
             Invoke("Die", 2f);
 
         }
