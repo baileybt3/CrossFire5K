@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1106348661433806384}
-  - component: {fileID: 1900022833639571211}
   - component: {fileID: 821841275173267259}
-  - component: {fileID: 9197751915147353530}
+  - component: {fileID: 1900022833639571211}
+  - component: {fileID: 5363696504318142571}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -34,6 +34,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &821841275173267259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8409239799415518144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10cdccbfa427dbf4c80e02aad8cb073b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  musicSource: {fileID: 1900022833639571211}
+  menuMusic: {fileID: 8300000, guid: a20107609f7878544854c847f68ba703, type: 3}
+  gameplayMusic: {fileID: 8300000, guid: f01fe483938a5e24999b5670c7625a8e, type: 3}
+  menuSceneNames:
+  - 01_MainMenu
+  - 02_Armory
+  - 03_MapSelect
+  sfxSource: {fileID: 5363696504318142571}
+  uiClickClip: {fileID: 8300000, guid: 281b8ede5964e564ebce1290274a2070, type: 3}
+  uiBackClip: {fileID: 8300000, guid: 08ba8aef155625249a30fdef0cddcaf4, type: 3}
+  footstepClip: {fileID: 8300000, guid: 6bdc82accf3e24f44864ea59d47107e8, type: 3}
+  healthPickupClip: {fileID: 8300000, guid: bddfb976ef9189841bc70c5b05f91b37, type: 3}
+  ammoPickupClip: {fileID: 8300000, guid: bddfb976ef9189841bc70c5b05f91b37, type: 3}
+  rifleClip: {fileID: 8300000, guid: f51da6f34b3904e49afea8b006fc7c6f, type: 3}
+  smgClip: {fileID: 8300000, guid: 1150d3227e522c943be7914720aa35d0, type: 3}
+  pistolClip: {fileID: 8300000, guid: 3d117173ccd654347b16078478cd9ee9, type: 3}
+  reloadClip: {fileID: 8300000, guid: 334f6feae98ca2b41995cd618b131383, type: 3}
+  explosionClip: {fileID: 8300000, guid: 566db882e79dd274f9b1e0e858483db9, type: 3}
 --- !u!82 &1900022833639571211
 AudioSource:
   m_ObjectHideFlags: 0
@@ -47,7 +77,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -131,37 +161,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &821841275173267259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8409239799415518144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10cdccbfa427dbf4c80e02aad8cb073b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  musicSource: {fileID: 1900022833639571211}
-  menuMusic: {fileID: 8300000, guid: a20107609f7878544854c847f68ba703, type: 3}
-  gameplayMusic: {fileID: 8300000, guid: f01fe483938a5e24999b5670c7625a8e, type: 3}
-  menuSceneNames:
-  - 01_MainMenu
-  - 02_Armory
-  - 03_MapSelect
-  sfxSource: {fileID: 9197751915147353530}
-  uiClickClip: {fileID: 8300000, guid: 281b8ede5964e564ebce1290274a2070, type: 3}
-  uiBackClip: {fileID: 8300000, guid: 08ba8aef155625249a30fdef0cddcaf4, type: 3}
-  footstepClip: {fileID: 8300000, guid: 6bdc82accf3e24f44864ea59d47107e8, type: 3}
-  healthPickupClip: {fileID: 8300000, guid: bddfb976ef9189841bc70c5b05f91b37, type: 3}
-  ammoPickupClip: {fileID: 8300000, guid: bddfb976ef9189841bc70c5b05f91b37, type: 3}
-  rifleClip: {fileID: 8300000, guid: f51da6f34b3904e49afea8b006fc7c6f, type: 3}
-  smgClip: {fileID: 8300000, guid: 1150d3227e522c943be7914720aa35d0, type: 3}
-  pistolClip: {fileID: 8300000, guid: 3d117173ccd654347b16078478cd9ee9, type: 3}
-  reloadClip: {fileID: 8300000, guid: 334f6feae98ca2b41995cd618b131383, type: 3}
-  explosionClip: {fileID: 8300000, guid: 566db882e79dd274f9b1e0e858483db9, type: 3}
---- !u!82 &9197751915147353530
+--- !u!82 &5363696504318142571
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,8 +173,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -112,7 +112,7 @@ public class AudioManager : MonoBehaviour
 
     private void PlaySFX(AudioClip clip)
     {
-        if (clip == null || sfxSource == null)
+        if (clip == null || sfxSource == null || !sfxSource.isActiveAndEnabled)
         {
             return;
         }
