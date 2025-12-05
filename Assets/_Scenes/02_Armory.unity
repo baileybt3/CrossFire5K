@@ -543,6 +543,34 @@ PrefabInstance:
       propertyPath: m_Options.m_Options.Array.data[1].m_Text
       value: SMG 1
       objectReference: {fileID: 0}
+    - target: {fileID: 83138877237905056, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 83138877237905056, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 83138877237905056, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 821841275173267259, guid: 08e037e3a7764694687c6d7e7a8c43d4, type: 3}
+    - target: {fileID: 83138877237905056, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 83138877237905056, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayUIBack
+      objectReference: {fileID: 0}
+    - target: {fileID: 83138877237905056, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: AudioManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 83138877237905056, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2616677539301499404, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[0].m_Text
       value: Assault Rifle 1
@@ -555,10 +583,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArmoryCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3101465354098130647, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_text
+      value: Assault Rifle 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3642531037785357389, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3642531037785357389, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3642531037785357389, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 385264872}
+    - target: {fileID: 3642531037785357389, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 821841275173267259, guid: 08e037e3a7764694687c6d7e7a8c43d4, type: 3}
+    - target: {fileID: 3642531037785357389, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3642531037785357389, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayUIClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 3642531037785357389, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: AudioManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3642531037785357389, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5211888210627967532, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -646,6 +706,14 @@ PrefabInstance:
     - target: {fileID: 5435501695708173097, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Text
       value: SMG 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7938255144957680419, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_text
+      value: Assault Rifle 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8236649765501049406, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_text
+      value: Assault Rifle 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

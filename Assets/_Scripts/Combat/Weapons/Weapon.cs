@@ -4,6 +4,7 @@ public class Weapon : MonoBehaviour
 {
 
     public enum FireMode { SemiAuto, FullAuto}
+    public enum WeaponType { Rifle, Pistol, SMG }
 
     [Header("Shooting")]
     [SerializeField] private GameObject bulletPrefab;
@@ -12,19 +13,16 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float bulletLifetime = 3f;
 
     [Header("Stats")]
-    [SerializeField] private float damage = 10f;
+    [SerializeField] private WeaponType weaponType = WeaponType.Rifle;
     [SerializeField] private FireMode fireMode = FireMode.SemiAuto;
+    [SerializeField] private float damage = 10f;
     [SerializeField] private float fireRate = 10f;
+    
 
     [Header("Ammo")]
     [SerializeField] private int magazineSize = 30;
     [SerializeField] private int startingReserveAmmo = 90;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip fireSound;
-    [SerializeField] private AudioClip reloadSound;
-    [SerializeField] private AudioClip emptyMagazineSound;
 
     public int CurrentAmmo { get; private set; }
     public int ReserveAmmo { get; private set; }
@@ -32,18 +30,10 @@ public class Weapon : MonoBehaviour
 
     public float fireCooldown;
 
-    private void Awake()
+    private void Start()
     {
         CurrentAmmo = magazineSize;
         ReserveAmmo = startingReserveAmmo;
-
-        if(audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-        }
-        
-        fireRate = Mathf.Max(0.01f, fireRate);
-
         UpdateHUDAmmo();
     }
 
@@ -55,7 +45,7 @@ public class Weapon : MonoBehaviour
 
     public void HandleFireInput(bool isHeld, bool pressedThisFrame, float deltaTime)
     {
-        if(fireCooldown > 0f)
+        if (fireCooldown > 0f)
         {
             fireCooldown -= deltaTime;
             return;
@@ -78,29 +68,41 @@ public class Weapon : MonoBehaviour
                 break;
         }
     }
+
+    public void Fire()
+    {
+        if (fireCooldown <= 0f)
+        {
+            TryFire();
+        }
+    }
+
     public void TryFire()
     {
-        if (bulletPrefab == null || firePoint == null) return;
+
+        if (bulletPrefab == null || firePoint == null)
+        {
+            return;
+        }
 
         if (CurrentAmmo <= 0)
         {
-            PlayOneShot(emptyMagazineSound);
             UpdateHUDAmmo();
             return;
         }
 
         CurrentAmmo--;
 
-        
+
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
-        if(bullet.TryGetComponent<Rigidbody>(out var rb))
+        if (bullet.TryGetComponent<Rigidbody>(out var rb))
         {
             rb.useGravity = false;
             rb.linearVelocity = firePoint.forward * bulletSpeed;
         }
 
-        if(bullet.TryGetComponent<Bullet>(out var bulletScript))
+        if (bullet.TryGetComponent<Bullet>(out var bulletScript))
         {
             bulletScript.damage = damage;
         }
@@ -109,43 +111,75 @@ public class Weapon : MonoBehaviour
 
         fireCooldown = 1f / fireRate;
 
-        PlayOneShot(fireSound);
+        PlayFireSound();
         UpdateHUDAmmo();
     }
 
     public void Reload()
     {
-        int needed = magazineSize - CurrentAmmo;
-        if (needed <= 0 || ReserveAmmo <= 0) return;
+        if (CurrentAmmo >= magazineSize)
+        {
+            return;
+        }
 
+        if(ReserveAmmo <= 0)
+        {
+            return;
+        }
+
+        int needed = magazineSize - CurrentAmmo;
         int toLoad = Mathf.Min(needed, ReserveAmmo);
+
         CurrentAmmo += toLoad;
         ReserveAmmo -= toLoad;
 
-        PlayOneShot(reloadSound);
+        UpdateHUDAmmo();
+
+        if(AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayReload();
+        }
+    }
+
+    public void AddAmmo(int amount)
+    {
+        if (amount <= 0)
+        {
+            return;
+        }
+
+        ReserveAmmo += amount;
         UpdateHUDAmmo();
     }
 
-    private void PlayOneShot(AudioClip clip)
+    private void PlayFireSound()
     {
-        if (audioSource != null && clip != null)
+        if (AudioManager.Instance == null)
         {
-            audioSource.PlayOneShot(clip);
+            return;
+        }
+
+        switch (weaponType)
+        {
+            case WeaponType.Rifle:
+                AudioManager.Instance.PlayRifleShot();
+                break;
+
+            case WeaponType.SMG:
+                AudioManager.Instance.PlaySMGShot();
+                break;
+
+            case WeaponType.Pistol:
+                AudioManager.Instance.PlayPistolShot();
+                break;            
         }
     }
+    
     private void UpdateHUDAmmo()
     {
         if (PlayerHealth.Instance != null)
         {
             PlayerHealth.Instance.UpdateAmmo(CurrentAmmo, ReserveAmmo);
         }
-    }
-
-    public void AddReserveAmmo(int amount)
-    {
-        if (amount <= 0) return;
-
-        ReserveAmmo += amount;
-        UpdateHUDAmmo();
     }
 }

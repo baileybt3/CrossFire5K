@@ -137,8 +137,8 @@ MonoBehaviour:
   fireRate: 10
   magazineSize: 10
   startingReserveAmmo: 30
-  audioSource: {fileID: 0}
-  fireSound: {fileID: 0}
-  reloadSound: {fileID: 0}
+  audioSource: {fileID: 1900022833639571211, guid: 08e037e3a7764694687c6d7e7a8c43d4, type: 3}
+  fireSound: {fileID: 8300000, guid: 3d117173ccd654347b16078478cd9ee9, type: 3}
+  reloadSound: {fileID: 8300000, guid: 334f6feae98ca2b41995cd618b131383, type: 3}
   emptyMagazineSound: {fileID: 0}
   fireCooldown: 0

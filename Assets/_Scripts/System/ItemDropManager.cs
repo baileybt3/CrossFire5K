@@ -32,10 +32,21 @@ public class ItemDropManager : MonoBehaviour
                 break;
 
             case PickupType.Ammo:
-                var weapon = other.GetComponentInChildren<Weapon>();
+                var player = other.GetComponent<PlayerController>();
+                Weapon weapon = null;
+
+                if(player != null)
+                {
+                    weapon = player.CurrentWeapon;
+                }
+                else
+                {
+                    weapon = other.GetComponentInChildren<Weapon>();
+                }
+
                 if (weapon != null)
                 {
-                    weapon.AddReserveAmmo(amount);
+                    weapon.AddAmmo(amount);
                 }
                 break;
         }
