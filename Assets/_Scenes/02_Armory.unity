@@ -545,23 +545,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 34279040385910561, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Text
-      value: UMP-45
+      value: UMP-45 (Lvl 5)
       objectReference: {fileID: 0}
     - target: {fileID: 34279040385910561, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text
-      value: Remington 870
+      value: Remington 870 (Lvl 10)
       objectReference: {fileID: 0}
     - target: {fileID: 34279040385910561, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[3].m_Text
-      value: M4A1
+      value: M4A1 (Lvl 15)
       objectReference: {fileID: 0}
     - target: {fileID: 34279040385910561, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[4].m_Text
-      value: Bullpup
+      value: Bullpup (Lvl 20)
       objectReference: {fileID: 0}
     - target: {fileID: 34279040385910561, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[5].m_Text
-      value: L96A1
+      value: L96A1 (Lvl 25)
       objectReference: {fileID: 0}
     - target: {fileID: 34279040385910561, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Color.a
@@ -665,7 +665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 637654159441931118, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Text
-      value: Colt .45
+      value: Colt .45 (Lvl 10)
       objectReference: {fileID: 0}
     - target: {fileID: 637654159441931118, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Color.a
@@ -693,7 +693,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1606207209550099705, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Text
-      value: Colt .45
+      value: Colt .45 (Lvl 10)
       objectReference: {fileID: 0}
     - target: {fileID: 1606207209550099705, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Color.a
@@ -721,23 +721,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2616677539301499404, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Text
-      value: UMP-45
+      value: UMP-45 (Lvl 5)
       objectReference: {fileID: 0}
     - target: {fileID: 2616677539301499404, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text
-      value: Remington 870
+      value: Remington 870 (Lvl 10)
       objectReference: {fileID: 0}
     - target: {fileID: 2616677539301499404, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[3].m_Text
-      value: M4A1
+      value: M4A1 (Lvl 15)
       objectReference: {fileID: 0}
     - target: {fileID: 2616677539301499404, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[4].m_Text
-      value: Bullpup
+      value: Bullpup (Lvl 20)
       objectReference: {fileID: 0}
     - target: {fileID: 2616677539301499404, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[5].m_Text
-      value: L96A1
+      value: L96A1 (Lvl 25)
       objectReference: {fileID: 0}
     - target: {fileID: 2616677539301499404, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Color.a
@@ -807,9 +807,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArmoryCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3078752804213138932, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_text
+      value: G20
+      objectReference: {fileID: 0}
     - target: {fileID: 3101465354098130647, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_text
-      value: Assault Rifle 1
+      value: AK-74u
       objectReference: {fileID: 0}
     - target: {fileID: 3642531037785357389, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -853,7 +857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5128832495205794543, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Text
-      value: Colt .45
+      value: Colt .45 (Lvl 10)
       objectReference: {fileID: 0}
     - target: {fileID: 5128832495205794543, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Color.a
@@ -961,23 +965,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5435501695708173097, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Text
-      value: UMP-45
+      value: UMP-45 (Lvl 5)
       objectReference: {fileID: 0}
     - target: {fileID: 5435501695708173097, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text
-      value: Remington 870
+      value: Remington 870 (Lvl 10)
       objectReference: {fileID: 0}
     - target: {fileID: 5435501695708173097, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[3].m_Text
-      value: M4A1
+      value: M4A1 (Lvl 15)
       objectReference: {fileID: 0}
     - target: {fileID: 5435501695708173097, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[4].m_Text
-      value: Bullpup
+      value: Bullpup (Lvl 20)
       objectReference: {fileID: 0}
     - target: {fileID: 5435501695708173097, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[5].m_Text
-      value: L96A1
+      value: L96A1 (Lvl 25)
       objectReference: {fileID: 0}
     - target: {fileID: 5435501695708173097, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Color.a
@@ -1043,13 +1047,21 @@ PrefabInstance:
       propertyPath: m_Options.m_Options.Array.data[5].m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7694822292477730478, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_text
+      value: G20
+      objectReference: {fileID: 0}
     - target: {fileID: 7938255144957680419, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_text
-      value: Assault Rifle 1
+      value: AK-74u
       objectReference: {fileID: 0}
     - target: {fileID: 8236649765501049406, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_text
-      value: Assault Rifle 1
+      value: AK-74u
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491389285436514016, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
+      propertyPath: m_text
+      value: G20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

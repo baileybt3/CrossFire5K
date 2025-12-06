@@ -132,13 +132,10 @@ MonoBehaviour:
   firePoint: {fileID: 1680717311462464808}
   bulletSpeed: 40
   bulletLifetime: 3
-  damage: 20
+  weaponType: 2
   fireMode: 1
+  damage: 20
   fireRate: 10
   magazineSize: 35
   startingReserveAmmo: 105
-  audioSource: {fileID: 0}
-  fireSound: {fileID: 0}
-  reloadSound: {fileID: 0}
-  emptyMagazineSound: {fileID: 0}
   fireCooldown: 0

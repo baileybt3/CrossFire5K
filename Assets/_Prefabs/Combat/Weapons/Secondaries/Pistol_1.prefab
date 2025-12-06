@@ -132,7 +132,7 @@ MonoBehaviour:
   firePoint: {fileID: 183005664887912951}
   bulletSpeed: 20
   bulletLifetime: 3
-  weaponType: 0
+  weaponType: 1
   fireMode: 0
   damage: 10
   fireRate: 10
