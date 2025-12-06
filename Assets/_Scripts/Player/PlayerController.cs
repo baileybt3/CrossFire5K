@@ -1,19 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Health")]
-    [SerializeField] float maxHP = 100f;
+    [SerializeField] private float maxHP = 100f;
     public float currentHP;
     public float MaxHP => maxHP;
     public float CurrentHP => currentHP;
     
     [Header("Movement")]
-    [SerializeField] float moveSpeed = 7f;
+    [SerializeField] private float moveSpeed = 7f;
 
     [Header("Animation")]
     private Animator anim;
@@ -27,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private Camera cam;
 
-    [Header("Weapon")]
+    [Header("Weapon Points")]
     [SerializeField] private Transform weaponSpawnPoint;
     [SerializeField] private Transform primaryHolsterPoint;
     [SerializeField] private Transform secondaryHolsterPoint;
@@ -35,25 +34,32 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject gun;
 
+    // Weapon instances
     private GameObject primaryInstance;
     private GameObject secondaryInstance;
     private GameObject utilityInstance;
 
+    // Weapon slots
     private Weapon primaryWeapon;
     private Weapon secondaryWeapon;
     private Weapon utilityWeapon;
 
+    // Current weapons
     private GameObject currentWeaponInstance;
     private Weapon currentWeapon;
     public Weapon CurrentWeapon => currentWeapon;
+
+
     private enum WeaponSlot { None, Primary, Secondary, Utility }
     private WeaponSlot currentSlot = WeaponSlot.None;
 
     private PauseMenuUI pauseMenu;
 
-    void OnEnable() => input.Enable();
-    void OnDisable() => input.Disable();
-    void Awake()
+    // Enable/Disable input actions
+    private void OnEnable() => input.Enable();
+    private void OnDisable() => input.Disable();
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
 
@@ -67,17 +73,25 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        // Initialize health
         currentHP = maxHP;
-        if (!anim) anim = GetComponentInChildren<Animator>(true);
+
+        // Get animator
+        if (!anim)
+        {
+            anim = GetComponentInChildren<Animator>(true);
+        }
         lastPos = transform.position;
         isDead = false;
 
+        // Equp current loadout weapons
         EquipPrimaryFromLoadout();
         
     }
 
     void Update()
     {
+        // If player pressed pause bind (Esc)
         if (input.Player.System.WasPressedThisFrame())
         {
             if (pauseMenu != null)
@@ -86,6 +100,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //  Stop movement if paused
         if (pauseMenu != null && pauseMenu.IsPaused)
         {
             anim.SetFloat("Speed", 0f);
@@ -110,7 +125,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            // Fire input
+            // Firing logic
             if(currentWeapon != null)
             {
                 bool fireHeld = input.Player.Combat.IsPressed();
@@ -143,6 +158,7 @@ public class PlayerController : MonoBehaviour
                 EquipWeaponSlot(WeaponSlot.Utility);
             }
 
+            // Update animator speed based on movement speed
             float mps = (transform.position - lastPos).magnitude / Mathf.Max(Time.deltaTime, 0.0001f);
             lastPos = transform.position;
             float speed01 = Mathf.Clamp01(mps / Mathf.Max(maxSpeed, 0.0001f));
@@ -154,8 +170,10 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDead)
         {
+            // Movement direction
             Vector3 dir = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
 
+            // Apply velocity
             rb.linearVelocity = new Vector3(
                 dir.x * moveSpeed,
                 rb.linearVelocity.y,
@@ -164,6 +182,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Pause menu hook
     public void Initialize(PauseMenuUI pauseMenuUI)
     {
         pauseMenu = pauseMenuUI;
@@ -176,21 +195,29 @@ public class PlayerController : MonoBehaviour
 
         if (currentHP <= 0f)
         {
+            // Trigger death animation
             anim.SetBool("isDead", true);
 
+            // Drop gun physics
             var rbGun = gun.AddComponent<Rigidbody>();
             gun.AddComponent<BoxCollider>();
             rbGun.useGravity = true;
             rbGun.isKinematic = false;
 
             isDead = true;
+
+            //Clean other weapons
+
             Destroy(secondaryInstance);
             Destroy(utilityInstance);
+
+            // Delayed death animation / die() call
             Invoke("Die", 2f);
 
         }
     }
 
+    // Health pickup
     public void AddHealth(float amount)
     {
         currentHP = Mathf.Clamp(currentHP + amount, 0f, maxHP);
@@ -214,12 +241,6 @@ public class PlayerController : MonoBehaviour
         if(weaponSpawnPoint == null)
         {
             Debug.LogWarning("WeaponSpawnPoint not assigned on PlayerController.");
-            return;
-        }
-
-        if (ArmoryManager.Instance == null)
-        {
-            Debug.LogWarning("No ArmoryManager found, using default gun.");
             return;
         }
 
@@ -320,7 +341,7 @@ public class PlayerController : MonoBehaviour
         currentWeaponInstance = null;
         currentWeapon = null;
 
-        // Move chosen one to hands
+        // Move chosen weapon to hands
         switch (slot)
         {
             case WeaponSlot.Primary:
@@ -357,7 +378,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        // Keep gun reference in sync for death ragdoll logic
+        // Keep gun reference for death physics
         gun = currentWeaponInstance;
 
         // Refresh ammo HUD for the newly equipped weapon

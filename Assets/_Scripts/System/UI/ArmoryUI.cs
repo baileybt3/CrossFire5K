@@ -20,11 +20,11 @@ public class ArmoryUI : MonoBehaviour
 
     private void Start()
     {
-        // When you open the Armory, reflect whatever was saved before
+        // Load saved dropdowns
         LoadFromManager();
     }
 
-    // Call this from a "Save" or "Back" button
+    // Save all loadout button call
     public void SaveAllLoadouts()
     {
         if (ArmoryManager.Instance == null)
@@ -54,7 +54,10 @@ public class ArmoryUI : MonoBehaviour
 
     private void LoadFromManager()
     {
-        if (ArmoryManager.Instance == null) return;
+        if (ArmoryManager.Instance == null)
+        {
+            return;
+        }
 
         var l0 = ArmoryManager.Instance.loadouts[0];
         var l1 = ArmoryManager.Instance.loadouts[1];
@@ -76,6 +79,7 @@ public class ArmoryUI : MonoBehaviour
 
     private void OnDisable()
     {
+        // Auto-save
         if(ArmoryManager.Instance != null)
         {
             SaveAllLoadouts();

@@ -8,7 +8,7 @@ public class MapSelectUI : MonoBehaviour
     [SerializeField] private string[] arenaSceneNames;
 
     [Header("Unlock")]
-    [SerializeField] private int[] mapUnlockLevels;
+    [SerializeField] private int[] mapUnlockLevels; // Required levels per map
     [SerializeField] private TMP_Text lockedMessageText;
 
     public void OnPlayButtonPressed()
@@ -40,7 +40,6 @@ public class MapSelectUI : MonoBehaviour
             {
                 lockedMessageText.text = $"Locked - reach level {requiredLevel} to play this map.";
             }
-
             Debug.Log($"Map {sceneToLoad} locked. Need level {requiredLevel}, you are level {playerLevel}.");
             return;
         }

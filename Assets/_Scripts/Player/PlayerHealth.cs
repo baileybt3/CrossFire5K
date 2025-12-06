@@ -22,6 +22,7 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
 
+        // Hide reload prompt
         if (reloadPromptText != null)
         {
             reloadPromptText.gameObject.SetActive(false);
@@ -32,11 +33,10 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        if (player == null)
-        {
-            player = FindAnyObjectByType<PlayerController>();
-        }
-
+        // Get player reference
+        player = FindAnyObjectByType<PlayerController>();
+   
+        // Update player healthUI
         if (player != null)
         {
             UpdateHealthUI();
@@ -50,11 +50,13 @@ public class PlayerHealth : MonoBehaviour
 
         float ratio = current / max;
 
+        // Update heatlh bar amount
         if (healthFillImage != null)
         {
             healthFillImage.fillAmount = ratio;
         }
 
+        // Update health text
         if (healthText != null)
         {
             healthText.text = $"{Mathf.CeilToInt(current)} / {Mathf.CeilToInt(max)}";
@@ -69,6 +71,7 @@ public class PlayerHealth : MonoBehaviour
             ammoText.text = $"{currentAmmo} / {reserveAmmo}";
         }  
 
+        // Ammo prompts
         if (reloadPromptText != null)
         {
             if(currentAmmo <= 0)
@@ -98,7 +101,10 @@ public class PlayerHealth : MonoBehaviour
             player = FindAnyObjectByType<PlayerController>();
         }
 
-        if (player == null) return;
+        if (player == null)
+        {
+            return;
+        }
 
         player.AddHealth(amount);
 

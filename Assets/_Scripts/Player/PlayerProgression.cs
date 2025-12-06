@@ -10,6 +10,7 @@ public class PlayerProgression : MonoBehaviour
 
     public int CurrentLevel { get; private set; }
     public int CurrentXP { get; private set; }
+
     public int XPToNextLevel => baseXPToLevelUp + (CurrentLevel * xpPerLevelIncrease);
 
 
@@ -26,6 +27,7 @@ public class PlayerProgression : MonoBehaviour
         LoadFromPrefs();
     }
 
+    // Handle xp and level ups
     public void AddXP(int amount)
     {
         if(amount <= 0)
@@ -44,12 +46,14 @@ public class PlayerProgression : MonoBehaviour
         SaveToPrefs();
     }
 
+    // Load saved level and XP
     private void LoadFromPrefs()
     {
         CurrentLevel = PlayerPrefs.GetInt("XP_Level", 0);
         CurrentXP = PlayerPrefs.GetInt("XP_Current", 0);
     }
 
+    // Save current level and XP
     private void SaveToPrefs()
     {
         PlayerPrefs.SetInt("XP_Level", CurrentLevel);

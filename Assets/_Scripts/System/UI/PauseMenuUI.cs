@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenuUI : MonoBehaviour
@@ -11,14 +11,15 @@ public class PauseMenuUI : MonoBehaviour
     {
         if (pausePanel != null)
         {
-            pausePanel.SetActive(false);
+            pausePanel.SetActive(false); // Hide menu
 
-            Time.timeScale = 1f;
+            Time.timeScale = 1f; 
             IsPaused = false;
         }
 
     }
 
+    // Input = (Esc) button
     public void TogglePause()
     {
         if (IsPaused)
@@ -42,8 +43,10 @@ public class PauseMenuUI : MonoBehaviour
             pausePanel.SetActive(true);
         }
 
+        // Stop gameplay
         Time.timeScale = 0f;
 
+        // Free cursor
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
@@ -66,6 +69,7 @@ public class PauseMenuUI : MonoBehaviour
         }
     }
 
+    // Exit to menu button
     public void ExitToMenu()
     {
         Time.timeScale = 1f;
@@ -73,11 +77,13 @@ public class PauseMenuUI : MonoBehaviour
         SceneManager.LoadScene("01_MainMenu");
     }
 
+    // Settings button
     public void OpenSettings()
     {
         Debug.Log("Settings menu in development");
     }
 
+    // Unfreeze game if destroyed
     private void OnDestroy()
     {
        if(Time.timeScale == 0f)

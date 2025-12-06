@@ -22,10 +22,9 @@ public class GameManager : MonoBehaviour
     private int currentPlayerTickets;
     private int currentEnemyTickets;
 
-    // Read-only hud properties
+    // Read-only HUD properties
     public int PlayerTickets => currentPlayerTickets;
     public int EnemyTickets => currentEnemyTickets;
-
     public int StartingPlayerTickets => startingPlayerTickets;
     public int StartingEnemyTickets => startingEnemyTickets;
 
@@ -67,13 +66,16 @@ public class GameManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         if (CurrentMatchState != MatchState.Playing)
+        {
             return;
+        }
 
         currentPlayerTickets = Mathf.Max(0, currentPlayerTickets - 1);
         RaiseTicketsChanged();
 
         if(currentPlayerTickets > 0)
         {
+            // Respawn with delay
             RespawnPlayer(2f);
         }
         else
@@ -96,6 +98,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Stop match and start win/lose event
     private void EndMatch(bool playerWon)
     {
         if(CurrentMatchState == MatchState.GameOver)

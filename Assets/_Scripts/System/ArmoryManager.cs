@@ -1,4 +1,3 @@
-using UnityEditor.Playables;
 using UnityEngine;
 
 [System.Serializable]
@@ -39,6 +38,7 @@ public class ArmoryManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        // Initialize loadout arrays
         for (int i = 0; i < loadouts.Length; i++)
         {
             if (loadouts[i] == null)
@@ -50,7 +50,7 @@ public class ArmoryManager : MonoBehaviour
         LoadFromPrefs();
     }
 
-    // Set weapons
+    // Set weapons index for loadout
     public void SetPrimary(int loadoutIndex, int weaponIndex)
     {
         if (!IsPrimaryUnlocked(weaponIndex))
@@ -82,6 +82,7 @@ public class ArmoryManager : MonoBehaviour
         loadouts[loadoutIndex].utilityIndex = weaponIndex;
     }
 
+    // Set selected loadout for match
     public void SetActiveLoadout(int loadoutIndex)
     {
         ActiveLoadoutIndex = Mathf.Clamp(loadoutIndex, 0, loadouts.Length - 1);
@@ -92,7 +93,10 @@ public class ArmoryManager : MonoBehaviour
     {
         Loadout l = loadouts[ActiveLoadoutIndex];
 
-        if (l.primaryIndex < 0 || l.primaryIndex >= primaries.Length) return null;
+        if (l.primaryIndex < 0 || l.primaryIndex >= primaries.Length)
+        {
+            return null;
+        }
         return primaries[l.primaryIndex];
     }
 
@@ -112,6 +116,7 @@ public class ArmoryManager : MonoBehaviour
         return utilities[l.utilityIndex];
     }
 
+    // Save loadouts and indexes to PlayerPrefs
     public void SaveToPrefs()
     {
         for (int i = 0; i < loadouts.Length; i++)
@@ -124,6 +129,7 @@ public class ArmoryManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    // Load loadouts and active index from PlayerPrefs
     public void LoadFromPrefs()
     {
         for (int i = 0; i < loadouts.Length; i++)
@@ -139,6 +145,7 @@ public class ArmoryManager : MonoBehaviour
         SetActiveLoadout(savedActive);
     }
 
+    // Check if primary is unlocked at current level
     public bool IsPrimaryUnlocked(int weaponIndex)
     {
         if (weaponIndex < 0 || weaponIndex >= primaries.Length)
@@ -155,6 +162,7 @@ public class ArmoryManager : MonoBehaviour
         return level >= primaryUnlockLevels[weaponIndex];
     }
 
+    // Check if secondary is unlocked at current level
     public bool IsSecondaryUnlocked(int weaponIndex)
     {
         if (weaponIndex < 0 || weaponIndex >= secondaries.Length)
@@ -171,6 +179,7 @@ public class ArmoryManager : MonoBehaviour
         return level >= secondaryUnlockLevels[weaponIndex];
     }
 
+    // Check if utility is unlocked at current level
     public bool IsUtilityUnlocked(int weaponIndex)
     {
         if (weaponIndex < 0 || weaponIndex >= utilities.Length)

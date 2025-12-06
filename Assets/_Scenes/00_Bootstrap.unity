@@ -286,8 +286,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11d61ba371d5d69459457b153cfe36a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArmoryManager
-  primaryUnlockLevels: 000000000200000005000000
-  secondaryUnlockLevels: 000000000200000005000000
+  primaryUnlockLevels: 00000000050000000a000000
+  secondaryUnlockLevels: 00000000050000000a000000
   utilityUnlockLevels: 
   primaries:
   - {fileID: 7485399860461132827, guid: 0aee759ee332ae547a1e1c3e7a2e09a4, type: 3}

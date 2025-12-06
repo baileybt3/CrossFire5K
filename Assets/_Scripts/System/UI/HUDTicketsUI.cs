@@ -12,6 +12,7 @@ public class HUDTicketsUI : MonoBehaviour
     [SerializeField] private Image enemyTicketsFillImage;
     [SerializeField] private TextMeshProUGUI enemyTicketsText;
 
+    // Starting ticket counts
     private int maxPlayerTickets;
     private int maxEnemyTickets;
 
@@ -24,6 +25,7 @@ public class HUDTicketsUI : MonoBehaviour
 
     private void Update()
     {
+        // Try subscribe until game manager exists
         if (!isSubscribed)
         {
             TrySubscribe();
@@ -32,6 +34,7 @@ public class HUDTicketsUI : MonoBehaviour
 
     private void OnDisable()
     {
+        // Unsubscript if HUD destroyed
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnTicketsChanged -= HandleTicketsChanged;
@@ -53,6 +56,7 @@ public class HUDTicketsUI : MonoBehaviour
         maxPlayerTickets = GameManager.Instance.StartingPlayerTickets;
         maxEnemyTickets = GameManager.Instance.StartingEnemyTickets;
 
+        // Initialize UI
         HandleTicketsChanged(GameManager.Instance.PlayerTickets, GameManager.Instance.EnemyTickets);
 
         isSubscribed = true;

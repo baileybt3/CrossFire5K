@@ -834,11 +834,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1282604748129672992, guid: 46a9f9edb72015f47a2e2fa6dfe74312, type: 3}
       propertyPath: 'mapUnlockLevels.Array.data[1]'
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1282604748129672992, guid: 46a9f9edb72015f47a2e2fa6dfe74312, type: 3}
       propertyPath: 'mapUnlockLevels.Array.data[2]'
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4561763798796257850, guid: 46a9f9edb72015f47a2e2fa6dfe74312, type: 3}
       propertyPath: m_Name

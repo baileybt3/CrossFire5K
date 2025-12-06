@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     [Header("Music")]
-    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource musicSource; //Background music source
     [SerializeField] private AudioClip menuMusic;
     [SerializeField] private AudioClip gameplayMusic;
     [SerializeField] private string[] menuSceneNames;
@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Add Sources
+        // Add Sources if missing
         if (musicSource == null)
         {
             musicSource = gameObject.AddComponent<AudioSource>();
@@ -48,6 +48,7 @@ public class AudioManager : MonoBehaviour
             sfxSource = gameObject.AddComponent<AudioSource>();
         }
 
+        // Setup music sources
         musicSource.loop = true;
         musicSource.spatialBlend = 0f;
 
@@ -57,6 +58,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnEnable()
     {
+        // Listen for scene changes
         SceneManager.sceneLoaded += HandleSceneLoaded;
     }
 
@@ -72,6 +74,7 @@ public class AudioManager : MonoBehaviour
         HandleSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
 
+    // Choose music to play based on scene
     private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         bool isMenuScene = false;

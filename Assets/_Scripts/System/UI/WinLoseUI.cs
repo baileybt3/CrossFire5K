@@ -44,31 +44,27 @@ public class WinLoseUI : MonoBehaviour
         isSubscribed = true;
     }
 
+    // Show win or lose panel
     private void HandleMatchEnded(bool playerWon)
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
         // hide both panels initially
-        if (winPanel != null) winPanel.SetActive(false);
-        if (losePanel != null) losePanel.SetActive(false);
-
+        winPanel.SetActive(false);
+        losePanel.SetActive(false);
+        
         if (playerWon)
-        {
-            if (winPanel != null)
-            {
-                winPanel.SetActive(true);
-            }
+        {          
+            winPanel.SetActive(true); 
         }
         else
         {
-            if (losePanel != null)
-            {
-                losePanel.SetActive(true);
-            }
+            losePanel.SetActive(true);
         }
     }
 
+    // Play again button
     public void OnPlayAgainClicked()
     {
         Time.timeScale = 1f;
@@ -76,6 +72,7 @@ public class WinLoseUI : MonoBehaviour
         SceneManager.LoadScene(current.buildIndex);
     }
 
+    // Main menu button
     public void OnMainMenuClicked()
     {
         Time.timeScale = 1f;
@@ -83,6 +80,7 @@ public class WinLoseUI : MonoBehaviour
         SceneManager.LoadScene("01_MainMenu");
     }
 
+    // Unfreeze gameplay when destroyed
     private void OnDestroy()
     {
         if(Time.timeScale == 0f)
