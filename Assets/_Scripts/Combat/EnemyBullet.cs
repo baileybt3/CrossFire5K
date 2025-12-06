@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class enemyBullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
     public float lifeTime = 3f;
     public float damage = 10f;
@@ -15,6 +15,7 @@ public class enemyBullet : MonoBehaviour
 
     void Start()
     {
+        // Move bullet
         rb.linearVelocity = transform.forward * speed;
 
         Destroy(gameObject, lifeTime);
@@ -22,11 +23,12 @@ public class enemyBullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // Collision with player
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
 
         if (player != null)
         {
-            player.TakeDamage(damage);
+            player.TakeDamage(damage); // Player take damage
         }
 
         Destroy(gameObject);

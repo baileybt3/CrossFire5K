@@ -3,20 +3,20 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
-    public static WaveManager Instance { get; private set; }
+    public static WaveManager Instance { get; private set; } //singleton
 
     [System.Serializable]
     public class Wave
     {
         [Min(0)]
-        public int enemyCount = 5;
+        public int enemyCount = 5; // enemies in wave
 
         [Min(0f)]
         public float spawnDelayBetweenEnemies = 0.5f;
     }
 
     [Header("Spawners")]
-    [SerializeField] private EnemySpawner[] spawners;
+    [SerializeField] private EnemySpawner[] spawners; // All spawn points
 
     [Header("Waves")]
     [SerializeField] private Wave[] waves;
@@ -24,10 +24,11 @@ public class WaveManager : MonoBehaviour
 
     private int currentWaveIndex = -1;
     private int enemiesAlive = 0;
-    private bool isSpawningWave = false;
+    private bool isSpawningWave = false; // True while spawning, false while not spawning
 
     private void Awake()
     {
+        // Initialize singleton
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -39,7 +40,7 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
-        // Auto-find spawners if not set in Inspector
+        // Spawner not found helper
         if (spawners == null || spawners.Length == 0)
         {
             spawners = Object.FindObjectsByType<EnemySpawner>(FindObjectsSortMode.None);
@@ -51,45 +52,32 @@ public class WaveManager : MonoBehaviour
 
     private void ValidateTicketsMatchGameManager()
     {
-        if (GameManager.Instance == null || waves == null) return;
+        if (GameManager.Instance == null || waves == null)
+        {
+            return;
+        }
 
+        // Count enemies in all waves
         int totalEnemies = 0;
         foreach (var wave in waves)
         {
             if (wave != null)
+            {
                 totalEnemies += Mathf.Max(0, wave.enemyCount);
+            }
         }
 
-        if (totalEnemies != GameManager.Instance.StartingEnemyTickets)
-        {
-            Debug.LogWarning(
-                $"[WaveManager] Total enemies across waves ({totalEnemies}) " +
-                $"does NOT match GameManager StartingEnemyTickets ({GameManager.Instance.StartingEnemyTickets}). " +
-                $"For tickets to hit 0 on the last kill, set them equal.",
-                this);
-        }
     }
 
     private void StartNextWave()
     {
         currentWaveIndex++;
 
-        if (waves == null || waves.Length == 0)
-        {
-            Debug.LogWarning("[WaveManager] No waves configured.", this);
-            return;
-        }
-
-        if (currentWaveIndex >= waves.Length)
-        {
-            // All waves spawned; GameManager will end match when tickets hit 0.
-            Debug.Log("[WaveManager] All waves completed.");
-            return;
-        }
-
+        // Get current waves stats
         Wave wave = waves[currentWaveIndex];
         Debug.Log($"[WaveManager] Starting wave {currentWaveIndex + 1} with {wave.enemyCount} enemies.");
 
+        // Stop previous spawn coroutines and restart
         StopAllCoroutines();
         StartCoroutine(SpawnWaveCoroutine(wave));
     }
@@ -98,24 +86,28 @@ public class WaveManager : MonoBehaviour
     {
         isSpawningWave = true;
 
+        // Spawn enemyCount enemies with delay
         for (int i = 0; i < wave.enemyCount; i++)
         {
             SpawnFromRandomSpawner();
 
             if (wave.spawnDelayBetweenEnemies > 0f)
+            {
                 yield return new WaitForSeconds(wave.spawnDelayBetweenEnemies);
+            }
             else
+            {
                 yield return null;
+            }
         }
 
         isSpawningWave = false;
 
-        // If they somehow killed everything during the spawn, check immediately.
+        // Start next wave after enemies killed
         if (enemiesAlive == 0)
         {
             yield return new WaitForSeconds(delayBetweenWaves);
-            if (GameManager.Instance != null &&
-                GameManager.Instance.CurrentMatchState == GameManager.MatchState.Playing)
+            if (GameManager.Instance != null && GameManager.Instance.CurrentMatchState == GameManager.MatchState.Playing)
             {
                 StartNextWave();
             }
@@ -124,12 +116,14 @@ public class WaveManager : MonoBehaviour
 
     private void SpawnFromRandomSpawner()
     {
+        // Check spawners exist
         if (spawners == null || spawners.Length == 0)
         {
-            Debug.LogWarning("[WaveManager] No spawners assigned.", this);
+            Debug.LogWarning("No spawners assigned.");
             return;
         }
 
+        // Pick random spawner and spawn enemy
         int index = Random.Range(0, spawners.Length);
         EnemySpawner chosenSpawner = spawners[index];
 
@@ -142,14 +136,21 @@ public class WaveManager : MonoBehaviour
 
     public void OnEnemyDied()
     {
+        // Clamp to 0
         enemiesAlive = Mathf.Max(0, enemiesAlive - 1);
 
-        if (isSpawningWave) return;
-        if (waves == null || currentWaveIndex >= waves.Length) return;
+        if (isSpawningWave)
+        {
+            return;
+        }
 
-        if (enemiesAlive == 0 &&
-            GameManager.Instance != null &&
-            GameManager.Instance.CurrentMatchState == GameManager.MatchState.Playing)
+        if (waves == null || currentWaveIndex >= waves.Length)
+        {
+            return;
+        }
+
+        // Start last wave enemy dies and match is still active start next wave
+        if (enemiesAlive == 0 && GameManager.Instance != null && GameManager.Instance.CurrentMatchState == GameManager.MatchState.Playing)
         {
             StartCoroutine(StartNextWaveDelayed());
         }

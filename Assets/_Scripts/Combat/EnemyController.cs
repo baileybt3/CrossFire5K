@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,7 +13,7 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
 
     [Header("AI Settings")]
-    [SerializeField] private float detectionRange = 8f;
+    [SerializeField] private float detectionRange = 8f; //chasing range
     [SerializeField] private float attackRange = 12f;
 
     [Header("Wander Points")]
@@ -52,14 +51,7 @@ public class EnemyController : MonoBehaviour
     private enum State { Wandering, Chasing, Attacking }
     private State currentState = State.Wandering;
 
-    private void Awake()
-    {
-        if(enemyCollider == null)
-        {
-            enemyCollider = GetComponent<CapsuleCollider>();
-        }
-    }
-
+    
     private void Start()
     {
         currentHP = maxHP;
@@ -68,13 +60,18 @@ public class EnemyController : MonoBehaviour
         agent.speed = moveSpeed;
     
 
+        // Find player
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
             player = playerObj.transform;
         }
 
-        if (!anim) anim = GetComponentInChildren<Animator>(true);
+        // Get animator
+        if (!anim)
+        {
+            anim = GetComponentInChildren<Animator>(true);
+        }
         lastPos = transform.position;
 
         PickNewWanderPoint();
@@ -82,20 +79,25 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if (currentHP <= 0) return;
+        if (currentHP <= 0)
+        {
+            return;
+        }
 
+        // Find player safety (if player dies)
         if (player == null)
         {
          
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj != null)
+            {
                 player = playerObj.transform;
-
+            }
         }
 
+        // Determine state based on player distance
         if (player != null)
         {
-
             float distance = Vector3.Distance(transform.position, player.position);
 
             if (distance <= attackRange && HasLineOfSight())
@@ -110,6 +112,7 @@ public class EnemyController : MonoBehaviour
                 currentState = State.Wandering;
         }
 
+        // Run determined state
         switch (currentState)
         {
             case State.Wandering: Wander(); break;
@@ -122,6 +125,7 @@ public class EnemyController : MonoBehaviour
             fireCooldown -= Time.deltaTime;
         }
 
+        // Update movement speed for animation
         float mps = (transform.position - lastPos).magnitude / Mathf.Max(Time.deltaTime, 0.0001f);
         lastPos = transform.position;
         float speed01 = Mathf.Clamp01(mps / Mathf.Max(maxSpeed, 0.0001f));
@@ -133,6 +137,7 @@ public class EnemyController : MonoBehaviour
     {
         wanderCooldown -= Time.deltaTime;
 
+        // if we reach wander target, wait to pick new wander target
         if (currentWanderTarget == null || agent.remainingDistance <= agent.stoppingDistance + 0.2f)
         {
             
@@ -147,26 +152,39 @@ public class EnemyController : MonoBehaviour
 
     void PickNewWanderPoint()
     {
-        if (wanderPoints.Length == 0) return;
+        if (wanderPoints.Length == 0)
+        {
+            return;
+        }
 
         int index = Random.Range(0, wanderPoints.Length);
         currentWanderTarget = wanderPoints[index];
+
         agent.isStopped = false;
         agent.SetDestination(currentWanderTarget.position);
     }
+
     void Chase()
     {
-        if (player == null) return;
+        if (player == null)
+        {
+            return;
+        }
         agent.isStopped = false;
         agent.SetDestination(player.position);
     }
 
     void Attack()
     {
-        if (player == null) return;
+        if (player == null)
+        {
+            return;
+        }
 
+        // Stop moving while shooting
         agent.isStopped = true;
 
+        // Face player
         Vector3 lookDir = (player.position - transform.position);
         lookDir.y = 0f;
         if (lookDir.sqrMagnitude > 0.1f)
@@ -179,13 +197,18 @@ public class EnemyController : MonoBehaviour
 
     bool HasLineOfSight()
     {
-        if (player == null) return false;
+        if (player == null)
+        {
+            return false;
+        }
 
+        // Enemy to player raycast
         Vector3 dir = (player.position - transform.position).normalized;
         if (Physics.Raycast(transform.position, dir, out RaycastHit hit, attackRange))
         {
             return hit.collider.CompareTag("Player");
         }
+
         return false;
     }
 
@@ -193,9 +216,11 @@ public class EnemyController : MonoBehaviour
     {
         if(fireCooldown <= 0f)
         {
+            //spawn bullet
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
+            //launch bullet
             rb.linearVelocity = direction.normalized * shootForce;
             bullet.transform.forward = direction;
 
@@ -210,15 +235,18 @@ public class EnemyController : MonoBehaviour
 
         if (currentHP <= 0f)
         {
+            //Disable dead enemy collider and play animation
             enemyCollider.enabled = false;
             anim.SetBool("isDead", true);   
             
+            // Drop current gun
             var rbGun = gun.AddComponent<Rigidbody>();
             gun.AddComponent<BoxCollider>();
             rbGun.useGravity = true;
             rbGun.isKinematic = false;
 
             isDead = true;
+            // Enemy death with delay for animation
             Invoke("Die", 2f);
 
         }
@@ -226,6 +254,7 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
+        // Notify game manager
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnEnemyDeath();
@@ -247,9 +276,13 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // Ammo  & Health drops
     private void TryDropPickup()
     {
-        if (pickupPrefabs == null || pickupPrefabs.Length == 0) return;
+        if (pickupPrefabs == null || pickupPrefabs.Length == 0)
+        {
+            return;
+        }
 
         if (Random.value <= dropChance)
         {

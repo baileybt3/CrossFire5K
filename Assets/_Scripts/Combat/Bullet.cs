@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // Hit enemy collision
         var enemy = collision.gameObject.GetComponent<EnemyController>();
 
         if(enemy != null)

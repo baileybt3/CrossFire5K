@@ -28,6 +28,7 @@ public class Weapon : MonoBehaviour
     public int ReserveAmmo { get; private set; }
     public FireMode Mode => fireMode;
 
+    // time until next fire
     public float fireCooldown;
 
     private void Start()
@@ -45,12 +46,14 @@ public class Weapon : MonoBehaviour
 
     public void HandleFireInput(bool isHeld, bool pressedThisFrame, float deltaTime)
     {
+        // reduce cooldown each frame
         if (fireCooldown > 0f)
         {
             fireCooldown -= deltaTime;
             return;
         }
 
+        // Determine which firemode to use
         switch (fireMode)
         {
             case FireMode.SemiAuto:
@@ -79,12 +82,7 @@ public class Weapon : MonoBehaviour
 
     public void TryFire()
     {
-
-        if (bulletPrefab == null || firePoint == null)
-        {
-            return;
-        }
-
+        // if mag empty
         if (CurrentAmmo <= 0)
         {
             UpdateHUDAmmo();
@@ -93,15 +91,16 @@ public class Weapon : MonoBehaviour
 
         CurrentAmmo--;
 
-
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
+        // Push bullet
         if (bullet.TryGetComponent<Rigidbody>(out var rb))
         {
             rb.useGravity = false;
             rb.linearVelocity = firePoint.forward * bulletSpeed;
         }
 
+        // Bullet damage
         if (bullet.TryGetComponent<Bullet>(out var bulletScript))
         {
             bulletScript.damage = damage;
@@ -117,30 +116,34 @@ public class Weapon : MonoBehaviour
 
     public void Reload()
     {
+        // Full mag
         if (CurrentAmmo >= magazineSize)
         {
             return;
         }
 
+        // No reserve ammo
         if(ReserveAmmo <= 0)
         {
             return;
         }
 
-        int needed = magazineSize - CurrentAmmo;
-        int toLoad = Mathf.Min(needed, ReserveAmmo);
+        int needed = magazineSize - CurrentAmmo; //Amount needed to fill mag
+        int toLoad = Mathf.Min(needed, ReserveAmmo); // How many we need to load
 
         CurrentAmmo += toLoad;
         ReserveAmmo -= toLoad;
 
         UpdateHUDAmmo();
 
+        // Play reload sound
         if(AudioManager.Instance != null)
         {
             AudioManager.Instance.PlayReload();
         }
     }
 
+    // Pickup call for ammo
     public void AddAmmo(int amount)
     {
         if (amount <= 0)
