@@ -549,11 +549,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 34279040385910561, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text
-      value: M4A1
+      value: Remington 870
       objectReference: {fileID: 0}
     - target: {fileID: 34279040385910561, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[3].m_Text
-      value: Remington 870
+      value: M4A1
       objectReference: {fileID: 0}
     - target: {fileID: 34279040385910561, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[4].m_Text
@@ -725,11 +725,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2616677539301499404, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text
-      value: M4A1
+      value: Remington 870
       objectReference: {fileID: 0}
     - target: {fileID: 2616677539301499404, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[3].m_Text
-      value: Remington 870
+      value: M4A1
       objectReference: {fileID: 0}
     - target: {fileID: 2616677539301499404, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[4].m_Text
@@ -965,11 +965,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5435501695708173097, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text
-      value: M4A1
+      value: Remington 870
       objectReference: {fileID: 0}
     - target: {fileID: 5435501695708173097, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[3].m_Text
-      value: Remington 870
+      value: M4A1
       objectReference: {fileID: 0}
     - target: {fileID: 5435501695708173097, guid: 0d06718d819c6a84cac94d9c6ea3c32a, type: 3}
       propertyPath: m_Options.m_Options.Array.data[4].m_Text
