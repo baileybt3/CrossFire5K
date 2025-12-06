@@ -12,11 +12,13 @@ public class ItemDropManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Item drop spin
         transform.Rotate(0f, rotateSpeed * Time.deltaTime, 0f, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        // Only trigger from player
         if (!other.CompareTag("Player"))
         {
             return;
@@ -25,6 +27,7 @@ public class ItemDropManager : MonoBehaviour
         switch (type)
         {
             case PickupType.Health:
+                // Add health with PlayerHealth singleton
                 if(PlayerHealth.Instance != null)
                 {
                     PlayerHealth.Instance.AddHealth(amount);
@@ -32,6 +35,7 @@ public class ItemDropManager : MonoBehaviour
                 break;
 
             case PickupType.Ammo:
+                // Get current player weapon
                 var player = other.GetComponent<PlayerController>();
                 Weapon weapon = null;
 
