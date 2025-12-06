@@ -46,6 +46,9 @@ public class WinLoseUI : MonoBehaviour
 
     private void HandleMatchEnded(bool playerWon)
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         // hide both panels initially
         if (winPanel != null) winPanel.SetActive(false);
         if (losePanel != null) losePanel.SetActive(false);

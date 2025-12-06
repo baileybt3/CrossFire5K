@@ -352,7 +352,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28819562}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -795,7 +795,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 134370038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3685,7 +3685,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470238165}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4515,6 +4515,10 @@ PrefabInstance:
       propertyPath: reloadPromptText
       value: 
       objectReference: {fileID: 1633685486}
+    - target: {fileID: 4063282850901836843, guid: 4bf3844319e15db4981908ccae1af6e1, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4655051013008098841, guid: 4bf3844319e15db4981908ccae1af6e1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6272,7 +6276,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922489959}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10333,7 +10337,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1746677272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10778,7 +10782,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1940551119}
     m_Modifications:
     - target: {fileID: 54984799371133073, guid: 9d9726e79e3a50e46ac001a73db816c2, type: 3}
       propertyPath: m_Pivot.x
@@ -10860,9 +10864,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2391250330272559816, guid: 9d9726e79e3a50e46ac001a73db816c2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 3031405199078261078, guid: 9d9726e79e3a50e46ac001a73db816c2, type: 3}
       propertyPath: m_Name
       value: PauseMenuCanvas (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587432071623302361, guid: 9d9726e79e3a50e46ac001a73db816c2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996527559481885403, guid: 9d9726e79e3a50e46ac001a73db816c2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6051684390230627604, guid: 9d9726e79e3a50e46ac001a73db816c2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10880,6 +10900,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f000e4061bb5f343ab4e1e30aad3d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenuUI
+--- !u!224 &1839459203 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 54984799371133073, guid: 9d9726e79e3a50e46ac001a73db816c2, type: 3}
+  m_PrefabInstance: {fileID: 1839459201}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1839560120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11648,6 +11673,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1387271134577786137, guid: e71741073452d774a82a8353e14ba649, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011355927102013215, guid: e71741073452d774a82a8353e14ba649, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2112449654438984336, guid: e71741073452d774a82a8353e14ba649, type: 3}
       propertyPath: m_Name
       value: PlayerCamera (1)
@@ -11659,6 +11692,10 @@ PrefabInstance:
     - target: {fileID: 5109135901292357707, guid: e71741073452d774a82a8353e14ba649, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6987063997445590602, guid: e71741073452d774a82a8353e14ba649, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7401351274641441936, guid: e71741073452d774a82a8353e14ba649, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11703,6 +11740,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7401351274641441936, guid: e71741073452d774a82a8353e14ba649, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1839459203}
     - targetCorrespondingSourceObject: {fileID: 8928999957459934035, guid: e71741073452d774a82a8353e14ba649, type: 3}
       insertIndex: 0
       addedObject: {fileID: 470238166}
@@ -11720,6 +11760,11 @@ PrefabInstance:
 --- !u!224 &1940551118 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8928999957459934035, guid: e71741073452d774a82a8353e14ba649, type: 3}
+  m_PrefabInstance: {fileID: 1940551117}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1940551119 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7401351274641441936, guid: e71741073452d774a82a8353e14ba649, type: 3}
   m_PrefabInstance: {fileID: 1940551117}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2032465689
@@ -12208,7 +12253,6 @@ SceneRoots:
   - {fileID: 1421209122}
   - {fileID: 1472737775}
   - {fileID: 1749223458}
-  - {fileID: 1839459201}
   - {fileID: 2076927357}
   - {fileID: 1534027712}
   - {fileID: 1940551117}

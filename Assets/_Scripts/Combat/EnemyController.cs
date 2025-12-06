@@ -46,6 +46,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float dropChance = 0.4f;
     [SerializeField] private GameObject[] pickupPrefabs;
 
+    [Header("XP Reward")]
+    [SerializeField] private int xpOnDeath = 5;
+
     private enum State { Wandering, Chasing, Attacking }
     private State currentState = State.Wandering;
 
@@ -231,6 +234,12 @@ public class EnemyController : MonoBehaviour
         if(WaveManager.Instance != null)
         {
             WaveManager.Instance.OnEnemyDied();
+        }
+
+        // give xp
+        if (PlayerProgression.Instance != null)
+        {
+            PlayerProgression.Instance.AddXP(xpOnDeath);
         }
 
         TryDropPickup();
