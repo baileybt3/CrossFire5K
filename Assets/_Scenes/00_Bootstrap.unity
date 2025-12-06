@@ -292,8 +292,13 @@ MonoBehaviour:
   primaries:
   - {fileID: 7485399860461132827, guid: 0aee759ee332ae547a1e1c3e7a2e09a4, type: 3}
   - {fileID: 4444470332792128655, guid: e70e8d431146a924bbda8f63eb2ec55a, type: 3}
+  - {fileID: 7485399860461132827, guid: 0ae6272acc2ec8241b969be1d0b6d574, type: 3}
+  - {fileID: 7485399860461132827, guid: 7f7f71cf387e61d4cbc405c571123ae5, type: 3}
+  - {fileID: 7485399860461132827, guid: 8f1b0aa2c0bfc1247ba9e99eb8978e3e, type: 3}
+  - {fileID: 7485399860461132827, guid: 0ed63b15c97126641ac090c9dcca36ed, type: 3}
   secondaries:
   - {fileID: 4488337439213621009, guid: 3a2d135b4da18284dafa2a7258788766, type: 3}
+  - {fileID: 4488337439213621009, guid: cffd6179a73bbe14e881ee333ccf1f46, type: 3}
   utilities:
   - {fileID: 1464094271655144587, guid: 9df536ad4b8a1c442b2da2e86a76707f, type: 3}
   loadouts:

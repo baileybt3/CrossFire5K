@@ -46,6 +46,12 @@ public class WaveManager : MonoBehaviour
             spawners = Object.FindObjectsByType<EnemySpawner>(FindObjectsSortMode.None);
         }
 
+        if (waves == null || waves.Length == 0)
+        {
+            Debug.LogWarning("No waves configured.");
+            return;
+        }
+
         ValidateTicketsMatchGameManager();
         StartNextWave();
     }

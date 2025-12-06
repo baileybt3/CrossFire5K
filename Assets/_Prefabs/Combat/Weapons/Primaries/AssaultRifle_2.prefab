@@ -91,9 +91,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: ba12fdf1a5d16464c843ff62fd960bc5, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5507906020696810635, guid: 5333bd1a9e512e24e9ae7c440872669f, type: 3}
     - target: {fileID: 919132149155446097, guid: ba12fdf1a5d16464c843ff62fd960bc5, type: 3}
       propertyPath: m_Name
-      value: AssaultRifle_1
+      value: AssaultRifle_2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -127,15 +131,12 @@ MonoBehaviour:
   firePoint: {fileID: 1427001738351449119}
   bulletSpeed: 35
   bulletLifetime: 3
-  damage: 20
+  weaponType: 0
   fireMode: 1
+  damage: 18
   fireRate: 10
   magazineSize: 30
   startingReserveAmmo: 90
-  audioSource: {fileID: 1900022833639571211, guid: 08e037e3a7764694687c6d7e7a8c43d4, type: 3}
-  fireSound: {fileID: 8300000, guid: f51da6f34b3904e49afea8b006fc7c6f, type: 3}
-  reloadSound: {fileID: 8300000, guid: 334f6feae98ca2b41995cd618b131383, type: 3}
-  emptyMagazineSound: {fileID: 0}
   fireCooldown: 0
 --- !u!4 &7830259120996026017 stripped
 Transform:
