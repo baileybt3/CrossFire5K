@@ -266,6 +266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 482683545}
   - component: {fileID: 482683544}
+  - component: {fileID: 482683546}
   m_Layer: 0
   m_Name: Systems
   m_TagString: Untagged
@@ -285,6 +286,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11d61ba371d5d69459457b153cfe36a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArmoryManager
+  primaryUnlockLevels: 000000000200000005000000
+  secondaryUnlockLevels: 000000000200000005000000
+  utilityUnlockLevels: 
   primaries:
   - {fileID: 7485399860461132827, guid: 0aee759ee332ae547a1e1c3e7a2e09a4, type: 3}
   - {fileID: 4444470332792128655, guid: e70e8d431146a924bbda8f63eb2ec55a, type: 3}
@@ -317,6 +321,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &482683546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482683543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48e530bea449a6a43b0827fc01b77798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerProgression
+  baseXPToLevelUp: 100
+  xpPerLevelIncrease: 25
 --- !u!1 &2059658324
 GameObject:
   m_ObjectHideFlags: 0

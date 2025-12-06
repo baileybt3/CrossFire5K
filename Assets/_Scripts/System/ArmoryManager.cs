@@ -13,6 +13,11 @@ public class ArmoryManager : MonoBehaviour
 {
     public static ArmoryManager Instance { get; private set; }
 
+    [Header("Unlock Levels")]
+    [SerializeField] private int[] primaryUnlockLevels;
+    [SerializeField] private int[] secondaryUnlockLevels;
+    [SerializeField] private int[] utilityUnlockLevels;
+
     [Header("Available Weapon Prefabs")]
     public GameObject[] primaries;
     public GameObject[] secondaries;
@@ -48,16 +53,32 @@ public class ArmoryManager : MonoBehaviour
     // Set weapons
     public void SetPrimary(int loadoutIndex, int weaponIndex)
     {
+        if (!IsPrimaryUnlocked(weaponIndex))
+        {
+            Debug.Log($"Primary weapon index {weaponIndex} is locked for current level.");
+            return;
+        }
         loadouts[loadoutIndex].primaryIndex = weaponIndex;
     }
 
     public void SetSecondary(int loadoutIndex, int weaponIndex)
     {
+        if (!IsSecondaryUnlocked(weaponIndex))
+        {
+            Debug.Log($"Secondary weapon index {weaponIndex} is locked for current level.");
+            return;
+        }
         loadouts[loadoutIndex].secondaryIndex = weaponIndex;
     }
 
     public void SetUtility(int loadoutIndex, int weaponIndex)
     {
+        if (!IsUtilityUnlocked(weaponIndex))
+        {
+            Debug.Log($"Utility weapon index {weaponIndex} is locked for current level.");
+            return;
+        }
+        
         loadouts[loadoutIndex].utilityIndex = weaponIndex;
     }
 
@@ -116,5 +137,53 @@ public class ArmoryManager : MonoBehaviour
 
         int savedActive = PlayerPrefs.GetInt("ActiveLoadoutIndex", ActiveLoadoutIndex);
         SetActiveLoadout(savedActive);
+    }
+
+    public bool IsPrimaryUnlocked(int weaponIndex)
+    {
+        if (weaponIndex < 0 || weaponIndex >= primaries.Length)
+        {
+            return false;
+        }
+
+        if (primaryUnlockLevels == null || weaponIndex >= primaryUnlockLevels.Length)
+        {
+            return true;
+        }
+
+        int level = PlayerProgression.Instance != null ? PlayerProgression.Instance.CurrentLevel : 0;
+        return level >= primaryUnlockLevels[weaponIndex];
+    }
+
+    public bool IsSecondaryUnlocked(int weaponIndex)
+    {
+        if (weaponIndex < 0 || weaponIndex >= secondaries.Length)
+        {
+            return false;
+        }
+
+        if (secondaryUnlockLevels == null || weaponIndex >= secondaryUnlockLevels.Length)
+        {
+            return true;
+        }
+
+        int level = PlayerProgression.Instance != null ? PlayerProgression.Instance.CurrentLevel : 0;
+        return level >= secondaryUnlockLevels[weaponIndex];
+    }
+
+    public bool IsUtilityUnlocked(int weaponIndex)
+    {
+        if (weaponIndex < 0 || weaponIndex >= utilities.Length)
+        {
+            return false;
+        }
+
+        if (utilityUnlockLevels == null || weaponIndex >= utilityUnlockLevels.Length)
+        {
+            return true;
+        }
+
+        int level = PlayerProgression.Instance != null ? PlayerProgression.Instance.CurrentLevel : 0;
+        return level >= utilityUnlockLevels[weaponIndex];
     }
 }

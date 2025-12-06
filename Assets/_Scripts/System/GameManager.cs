@@ -107,6 +107,13 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 0f;
 
+        // Xp reward
+        if (PlayerProgression.Instance != null)
+        {
+            int xp = playerWon ? 150 : 75;
+            PlayerProgression.Instance.AddXP(xp);
+        }
+
         OnMatchEnded?.Invoke(playerWon);
     }
 

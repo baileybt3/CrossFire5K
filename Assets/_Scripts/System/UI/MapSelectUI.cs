@@ -7,6 +7,10 @@ public class MapSelectUI : MonoBehaviour
     [SerializeField] private TMP_Dropdown loadoutDropdown;
     [SerializeField] private string[] arenaSceneNames;
 
+    [Header("Unlock")]
+    [SerializeField] private int[] mapUnlockLevels;
+    [SerializeField] private TMP_Text lockedMessageText;
+
     public void OnPlayButtonPressed()
     {
         int index = mapDropdown.value;
@@ -22,6 +26,22 @@ public class MapSelectUI : MonoBehaviour
         if (SceneLoader.Instance == null)
         {
             Debug.LogError("SceneLoader instance not found!");
+            return;
+        }
+
+        // XP check for maps unlocked
+        int requiredLevel = (mapUnlockLevels != null && index < mapUnlockLevels.Length) ? mapUnlockLevels[index] : 0;
+
+        int playerLevel = PlayerProgression.Instance != null ? PlayerProgression.Instance.CurrentLevel : 0;
+
+        if (playerLevel < requiredLevel)
+        {
+            if (lockedMessageText != null)
+            {
+                lockedMessageText.text = $"Locked - reach level {requiredLevel} to play this map.";
+            }
+
+            Debug.Log($"Map {sceneToLoad} locked. Need level {requiredLevel}, you are level {playerLevel}.");
             return;
         }
 
