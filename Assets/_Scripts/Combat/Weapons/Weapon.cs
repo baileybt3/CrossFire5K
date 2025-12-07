@@ -4,7 +4,7 @@ public class Weapon : MonoBehaviour
 {
 
     public enum FireMode { SemiAuto, FullAuto}
-    public enum WeaponType { Rifle, Pistol, SMG }
+    public enum WeaponType { Rifle, Pistol, SMG, Utility }
 
     [Header("Shooting")]
     [SerializeField] private GameObject bulletPrefab;
@@ -93,21 +93,33 @@ public class Weapon : MonoBehaviour
 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
-        // Push bullet
-        if (bullet.TryGetComponent<Rigidbody>(out var rb))
+        Grenade grenade = bullet.GetComponentInChildren<Grenade>();
+
+        // if Grenade, use grenade script
+        if(grenade != null)
         {
-            rb.useGravity = false;
-            rb.linearVelocity = firePoint.forward * bulletSpeed;
+            grenade.damage = damage; // explosion damage
+            grenade.Launch(firePoint.forward); //launch direction
         }
-
-        // Bullet damage
-        if (bullet.TryGetComponent<Bullet>(out var bulletScript))
+        else
         {
-            bulletScript.damage = damage;
+            // Push bullet
+            if (bullet.TryGetComponent<Rigidbody>(out var rb))
+            {
+                rb.useGravity = false;
+                rb.linearVelocity = firePoint.forward * bulletSpeed;
+            }
+
+            // Bullet damage
+            if (bullet.TryGetComponent<Bullet>(out var bulletScript))
+            {
+                bulletScript.damage = damage;
+            }
+
+
+            Destroy(bullet, bulletLifetime);
         }
-
-        Destroy(bullet, bulletLifetime);
-
+        
         fireCooldown = 1f / fireRate;
 
         PlayFireSound();

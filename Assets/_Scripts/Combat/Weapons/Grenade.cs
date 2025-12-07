@@ -8,6 +8,8 @@ public class Grenade : MonoBehaviour
     public float damage = 50f;
     public GameObject explosionVFX; //particle prefab
     public float lifeTime = 5f; //safety
+    public float forwardSpeed = 12f;
+    public float upwardSpeed = 5f;
 
     private bool hasExploded = false;
     private Rigidbody rb;
@@ -20,13 +22,21 @@ public class Grenade : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Arc
-        if(rb != null)
-        {
-            rb.useGravity = true;
-            rb.linearVelocity += Vector3.up * 3f;
-        }
         Destroy(gameObject, lifeTime);
+    }
+
+    // Launch direction
+    public void Launch(Vector3 direction)
+    {
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+
+        rb.useGravity = true;
+
+        //use weapons fire direction for forward
+        rb.linearVelocity = direction.normalized * forwardSpeed + Vector3.up * upwardSpeed;
     }
 
     private void OnCollisionEnter(Collision collision)
