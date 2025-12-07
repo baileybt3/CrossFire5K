@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class ArmoryUI : MonoBehaviour
 {
@@ -23,6 +24,12 @@ public class ArmoryUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI xpText;
     [SerializeField] private UnityEngine.UI.Image xpFillImage;
     [SerializeField] private TextMeshProUGUI nextUnlockText;
+
+    [Header("Locked UI")]
+    [SerializeField] private TMP_Text lockedMessageText;
+    [SerializeField] private float lockedMessageVisibleTime = 3f;
+    [SerializeField] private float lockedMessageFadeTime = 0.5f;
+    private Coroutine lockedMessageRoutine;
 
     [System.Serializable]
     private class UnlockHint
@@ -49,16 +56,75 @@ public class ArmoryUI : MonoBehaviour
             return;
         }
 
+        // Loadout 1 level requirement helper
+        if (!ArmoryManager.Instance.IsPrimaryUnlocked(primaryDropdown1.value))
+        {
+            int requirement = ArmoryManager.Instance.GetPrimaryRequiredLevel(primaryDropdown1.value);
+            if(lockedMessageText != null)
+            {
+                ShowLockedMessage($"Loadout 1 Primary is locked. Reach level {requirement} to equip this weapon.");
+                return;
+            }
+        }
+        if (!ArmoryManager.Instance.IsSecondaryUnlocked(secondaryDropdown1.value))
+        {
+            int requirement = ArmoryManager.Instance.GetSecondaryRequiredLevel(secondaryDropdown1.value);
+            if (lockedMessageText != null)
+            {
+                ShowLockedMessage($"Loadout 1 Secondary is locked. Reach level {requirement} to equip this weapon.");
+                return;
+            }
+        }
         // Loadout 1 (index 0)
         ArmoryManager.Instance.SetPrimary(0, primaryDropdown1.value);
         ArmoryManager.Instance.SetSecondary(0, secondaryDropdown1.value);
         ArmoryManager.Instance.SetUtility(0, utilityDropdown1.value);
 
+
+        // Loadout 2 level requirement helper
+        if (!ArmoryManager.Instance.IsPrimaryUnlocked(primaryDropdown2.value))
+        {
+            int requirement = ArmoryManager.Instance.GetPrimaryRequiredLevel(primaryDropdown2.value);
+            if (lockedMessageText != null)
+            {
+                ShowLockedMessage($"Loadout 2 Primary is locked. Reach level {requirement} to equip this weapon.");
+                return;
+            }
+        }
+        if (!ArmoryManager.Instance.IsSecondaryUnlocked(secondaryDropdown2.value))
+        {
+            int requirement = ArmoryManager.Instance.GetSecondaryRequiredLevel(secondaryDropdown2.value);
+            if (lockedMessageText != null)
+            {
+                ShowLockedMessage($"Loadout 2 Secondary is locked. Reach level {requirement} to equip this weapon.");
+                return;
+            }
+        }
         // Loadout 2 (index 1)
         ArmoryManager.Instance.SetPrimary(1, primaryDropdown2.value);
         ArmoryManager.Instance.SetSecondary(1, secondaryDropdown2.value);
         ArmoryManager.Instance.SetUtility(1, utilityDropdown2.value);
 
+
+        // Loadout 3 level requirement helper
+        if (!ArmoryManager.Instance.IsPrimaryUnlocked(primaryDropdown3.value))
+        {
+            int requirement = ArmoryManager.Instance.GetPrimaryRequiredLevel(primaryDropdown3.value);
+            if (lockedMessageText != null)
+            {
+                ShowLockedMessage($"Loadout 3 Primary is locked. Reach level {requirement} to equip this weapon.");
+                return;
+            }
+        }
+        if (!ArmoryManager.Instance.IsSecondaryUnlocked(secondaryDropdown3.value))
+        {
+            int requirement = ArmoryManager.Instance.GetSecondaryRequiredLevel(secondaryDropdown3.value);
+            if (lockedMessageText != null)
+            {
+                ShowLockedMessage($"Loadout 3 Secondary is locked. Reach level {requirement} to equip this weapon.");
+                return;
+            }
+        }
         // Loadout 3 (index 2)
         ArmoryManager.Instance.SetPrimary(2, primaryDropdown3.value);
         ArmoryManager.Instance.SetSecondary(2, secondaryDropdown3.value);
@@ -146,6 +212,53 @@ public class ArmoryUI : MonoBehaviour
         }
 
         return $"Next unlock at Level {next.level}: {next.description}";
+    }
+
+    private void ShowLockedMessage(string message)
+    {
+        if(lockedMessageText == null)
+        {
+            return;
+        }
+
+        // Remove previous  fade
+        if(lockedMessageRoutine != null)
+        {
+            StopCoroutine(lockedMessageRoutine);
+        }
+
+        lockedMessageRoutine = StartCoroutine(FadeLockedMessageRoutine(message));
+    }
+
+    //Fade message
+    private IEnumerator FadeLockedMessageRoutine(string message)
+    {
+        //Start fully visible
+        lockedMessageText.text = message;
+        Color c = lockedMessageText.color;
+        c.a = 1f;
+        lockedMessageText.color = c;
+
+        // wait as visible
+        yield return new WaitForSeconds(lockedMessageVisibleTime);
+
+        //Fade out
+        float t = 0f;
+        while (t < lockedMessageFadeTime)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, t / lockedMessageFadeTime);
+            c.a = alpha;
+            lockedMessageText.color = c;
+            yield return null;
+        }
+
+        //Clear and reset
+        lockedMessageText.text = string.Empty;
+        c.a = 0f;
+        lockedMessageText.color = c;
+
+        lockedMessageRoutine = null;
     }
 
     private void OnDisable()

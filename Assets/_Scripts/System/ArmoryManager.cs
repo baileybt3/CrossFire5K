@@ -195,4 +195,33 @@ public class ArmoryManager : MonoBehaviour
         int level = PlayerProgression.Instance != null ? PlayerProgression.Instance.CurrentLevel : 0;
         return level >= utilityUnlockLevels[weaponIndex];
     }
+
+    //Level requirment text helpers
+    public int GetPrimaryRequiredLevel(int weaponIndex)
+    {
+        if(primaryUnlockLevels == null || weaponIndex < 0 || weaponIndex >= primaryUnlockLevels.Length)
+        {
+            return 0; //no level required
+        }
+
+        return primaryUnlockLevels[weaponIndex];
+    }
+
+    public int GetSecondaryRequiredLevel(int weaponIndex)
+    {
+        if (secondaryUnlockLevels == null || weaponIndex < 0 || weaponIndex >= secondaryUnlockLevels.Length)
+        {
+            return 0;
+        }
+        return secondaryUnlockLevels[weaponIndex];
+    }
+
+    public int GetUtilityRequiredLevel(int weaponIndex)
+    {
+        if (utilityUnlockLevels == null || weaponIndex < 0 || weaponIndex >= utilityUnlockLevels.Length)
+        {
+            return 0;
+        }
+        return utilityUnlockLevels[weaponIndex];
+    }
 }
