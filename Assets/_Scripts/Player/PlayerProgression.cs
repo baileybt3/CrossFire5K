@@ -13,7 +13,7 @@ public class PlayerProgression : MonoBehaviour
 
     public int XPToNextLevel => baseXPToLevelUp + (CurrentLevel * xpPerLevelIncrease);
 
-
+ 
     private void Awake()
     {
         if(Instance != null && Instance != this)
@@ -44,6 +44,7 @@ public class PlayerProgression : MonoBehaviour
         }
 
         SaveToPrefs();
+
     }
 
     // Load saved level and XP

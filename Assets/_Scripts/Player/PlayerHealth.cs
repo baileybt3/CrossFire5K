@@ -5,10 +5,16 @@ using TMPro;
 public class PlayerHealth : MonoBehaviour
 {
     [Header("UI References")]
+    //Health
     [SerializeField] private Image healthFillImage;
     [SerializeField] private TextMeshProUGUI healthText;
+    //Ammo
     [SerializeField] private TextMeshProUGUI ammoText;
     [SerializeField] private TextMeshProUGUI reloadPromptText;
+    //XP
+    [SerializeField] private Image xpFillImage;
+    [SerializeField] private TextMeshProUGUI xpText;
+    [SerializeField] private TextMeshProUGUI levelText;
 
     public static PlayerHealth Instance { get; private set; }
 
@@ -40,6 +46,11 @@ public class PlayerHealth : MonoBehaviour
         if (player != null)
         {
             UpdateHealthUI();
+        }
+
+        if (player != null)
+        {
+            UpdateXPUI();
         }
     }
 
@@ -109,6 +120,37 @@ public class PlayerHealth : MonoBehaviour
         player.AddHealth(amount);
 
         UpdateHealthUI();
+    }
+
+    private void UpdateXPUI()
+    {
+        if (PlayerProgression.Instance == null)
+        {
+            return;
+        }
+
+        int level = PlayerProgression.Instance.CurrentLevel;
+        int currentXP = PlayerProgression.Instance.CurrentXP;
+        int xpToNext = PlayerProgression.Instance.XPToNextLevel;
+
+        // Update xp fill image
+        if (xpFillImage != null)
+        {
+            float fill = xpToNext > 0 ? (float)currentXP / xpToNext : 0f;
+            xpFillImage.fillAmount = Mathf.Clamp01(fill);
+        }
+
+        // Update level text
+        if (levelText != null)
+        {
+            levelText.text = $"LVL {level}";
+        }
+
+        // Update xp text
+        if (xpText != null)
+        {
+            xpText.text = $"{currentXP} / {xpToNext} XP";
+        }
     }
     
 }
