@@ -6,6 +6,7 @@ public class MainMenuInstructions : MonoBehaviour
 
     [Header("references")]
     [SerializeField] private GameObject instructionsPanel;
+    [SerializeField] private Button okButton;
 
     [SerializeField] private bool showOnce = true;
 
@@ -14,6 +15,13 @@ public class MainMenuInstructions : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // button wire up
+        if (okButton != null)
+        {
+            okButton.onClick.RemoveListener(OnOkClicked); // safety
+            okButton.onClick.AddListener(OnOkClicked);
+        }
+
         bool hasSeen = PlayerPrefs.GetInt(HasSeenKey, 0) == 1;
 
         if(instructionsPanel != null)
@@ -42,9 +50,4 @@ public class MainMenuInstructions : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

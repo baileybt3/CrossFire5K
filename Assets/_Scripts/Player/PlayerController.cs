@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     public Weapon CurrentWeapon => currentWeapon;
 
 
-    private enum WeaponSlot { None, Primary, Secondary, Utility }
+    private enum WeaponSlot { None, Primary, Secondary, Utility}
     private WeaponSlot currentSlot = WeaponSlot.None;
 
     private PauseMenuUI pauseMenu;
