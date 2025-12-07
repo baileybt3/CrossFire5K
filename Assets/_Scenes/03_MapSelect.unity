@@ -831,8 +831,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
-  m_fontSizeBase: 16
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -902,6 +902,14 @@ PrefabInstance:
     - target: {fileID: 2654713497787168063, guid: b29a0ddeae6c3a748932027a60f21874, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text
       value: Desert Storm (Lvl 20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607253927992762344, guid: b29a0ddeae6c3a748932027a60f21874, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607253927992762344, guid: b29a0ddeae6c3a748932027a60f21874, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -39
       objectReference: {fileID: 0}
     - target: {fileID: 3998834496844263588, guid: b29a0ddeae6c3a748932027a60f21874, type: 3}
       propertyPath: m_Options.m_Options.Array.data[0].m_Color.b
@@ -1022,6 +1030,14 @@ PrefabInstance:
     - target: {fileID: 4813112200147460175, guid: b29a0ddeae6c3a748932027a60f21874, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 90.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5654841555540790828, guid: b29a0ddeae6c3a748932027a60f21874, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -116
+      objectReference: {fileID: 0}
+    - target: {fileID: 5654841555540790828, guid: b29a0ddeae6c3a748932027a60f21874, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -37
       objectReference: {fileID: 0}
     - target: {fileID: 5729987136295565710, guid: b29a0ddeae6c3a748932027a60f21874, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
