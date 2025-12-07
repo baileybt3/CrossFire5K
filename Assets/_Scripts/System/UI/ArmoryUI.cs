@@ -18,6 +18,22 @@ public class ArmoryUI : MonoBehaviour
     [SerializeField] private TMP_Dropdown secondaryDropdown3;
     [SerializeField] private TMP_Dropdown utilityDropdown3;
 
+    [Header("Progression UI")]
+    [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI xpText;
+    [SerializeField] private UnityEngine.UI.Image xpFillImage;
+    [SerializeField] private TextMeshProUGUI nextUnlockText;
+
+    [System.Serializable]
+    private class UnlockHint
+    {
+        public int level;
+        [TextArea] public string description;
+    }
+
+    [Header("Unlock Hints")]
+    [SerializeField] private UnlockHint[] unlockHints;
+
     private void Start()
     {
         // Load saved dropdowns
@@ -75,6 +91,61 @@ public class ArmoryUI : MonoBehaviour
         primaryDropdown3.value = Mathf.Clamp(l2.primaryIndex, 0, primaryDropdown3.options.Count - 1);
         secondaryDropdown3.value = Mathf.Clamp(l2.secondaryIndex, 0, secondaryDropdown3.options.Count - 1);
         utilityDropdown3.value = Mathf.Clamp(l2.utilityIndex, 0, utilityDropdown3.options.Count - 1);
+
+        UpdateProgressionUI();
+    }
+
+    private void UpdateProgressionUI()
+    {        
+        int level = PlayerProgression.Instance.CurrentLevel;    
+        int currentXP = PlayerProgression.Instance.CurrentXP;     
+        int xpToNext = PlayerProgression.Instance.XPToNextLevel;
+   
+        if (levelText != null)  
+        {
+            levelText.text = $"Level {level}";
+        }
+        
+        if (xpText != null)
+        {
+            xpText.text = $"{currentXP} / {xpToNext} XP";
+        }
+
+        if (xpFillImage != null)
+        {
+            float fill = xpToNext > 0 ? (float)currentXP / xpToNext : 0f;
+            xpFillImage.fillAmount = Mathf.Clamp01(fill);
+        }
+
+        if (nextUnlockText != null)
+        {
+            nextUnlockText.text = BuildNextUnlockDescription(level);
+        }
+    }
+
+    private string BuildNextUnlockDescription(int currentLevel)
+    {
+        if (unlockHints == null || unlockHints.Length == 0)
+        {
+            return "No unlock data.";
+        }
+
+        UnlockHint next = null;
+
+        foreach(var hint in unlockHints)
+        {
+            if (hint.level > currentLevel && (next == null || hint.level < next.level))
+            {
+                next = hint;
+            }
+        }
+
+        if(next == null)
+        {
+            return "All rewards unlocked.";
+        }
+
+        return $"Next unlock at Level {next.level}: {next.description}";
     }
 
     private void OnDisable()
