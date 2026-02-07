@@ -1,18 +1,27 @@
-# CrossFire5K #
+# CrossFire5K
 
-## Description & Theme ##
-Crossfire5K is a 2.5D top-down arena shooter. Players engage in fast-paced combat within a simulated arena called Crossfire5K. The theme focuses on arena battles where players must outlast the enemy team. Combat consists of simple controls, satisfying gunplay, and progression for unlocking new weapons. The visual style will use low-poly 3D models with a top-down camera. The audio emphasizes punchy gunfire and arcade style ambiance.
+CrossFire5K is a fast-paced 2.5D top-down arena shooter set inside a simulated combat arena. Players move with WASD, aim and fire with the mouse, and fight to drain the enemy team’s ticket count. Matches focus on clean controls, punchy weapons, and quick decision-making.
 
-### Core Mechanics ###
-The players’ primary controls include using WASD movement for smooth responsive movement. Aiming and shooting is mouse-based. Enemy AI seeks and attacks the players throughout the arena. Each game consists of ticket-based win conditions. Each death reduces the teams ticket count. The team who outlasts the other team’s ticket count wins. The XP system is used to unlock new weapons and potentially new maps in the future. The XP system is aimed at promoting motivation to keep the player engaged.  Within the arena there are various health and ammo pickups. The score and kill counts for each game are tracked through the in-game scoreboard. 
+<img width="1722" height="839" alt="CrossFire5k Demo Pic" src="https://github.com/user-attachments/assets/8334d405-42b5-4c23-9d9b-8bd8fc0abc2f" />
 
-## Overview ##
-* Title : CrossFire5K
+## Gameplay
+- Movement: WASD (responsive top-down movement)
+- Combat: mouse aim + shoot
+- Win condition: ticket-based team deathmatch  
+  - Each death reduces your team’s tickets  
+  - First team to hit 0 tickets loses
+- Pickups: health and ammo spawns across the arena
+- Scoreboard: tracks kills and match stats
 
-* Genre: 2.5D Top-Down Shooter  
+## Progression
+Earn XP from matches to unlock new weapons (with potential maps/content added later).
 
-* Platform: PC (Windows)  
+## Visuals & Audio
+- Low-poly 3D with a top-down camera
+- Punchy gunfire + arcade-style ambience
 
-* Engine: Unity (C#) |  Tools: Blender (art/models)  |  GitHub (version control)  |  FL Studio (sound fx)  
-
-
+## Tech Stack
+- Unity (C#)
+- Blender, FL Studio
+- GitHub for version control
+- PC (Windows)
